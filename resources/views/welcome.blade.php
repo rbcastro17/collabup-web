@@ -281,7 +281,6 @@ $(function() {
 <div class="ui vertical inverted sidebar menu">
   <a href="#home" class="active item">Home</a>
   <a href="#work" class="item">Work</a>
-  <a href="#company" class="item">Company</a>
   <a href="#contact" class="item">Careers</a>
    <div class="ui huge icon input">
   <input type="text" placeholder="Search...">
@@ -313,7 +312,7 @@ $(function() {
         </a>
         <a href="#home"class="active item">Home</a>
         <a href="#work"class="item">Work</a>
-        <a href="#company"class="item">Company</a>
+ 
         <a href="#contact"class="item">Contact Us</a>
         <div class="right item">
           <a href ="#start"class="ui inverted button">Log in</a>
@@ -327,7 +326,7 @@ $(function() {
         CollabUp
       </h1>
       <h2>Collaboration at its finest.</h2>
-      <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+      <div class="ui huge primary button">Edited <i class="right arrow icon"></i></div>
     </div>
 
   </div>
