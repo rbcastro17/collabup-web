@@ -24,6 +24,8 @@ use App\Mail\Confirmation;
 
 //use App\PasswordReset;
 
+use Laravolt\Avatar\Facade as Avatar;
+
 use App\Mail\SendForgetPassword;
 //use App\Mail\ForgetPassword;
 class AuthController extends Controller
@@ -47,8 +49,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-      //  echo "Here";
-      //  dd($request);
+
         set_time_limit(0);
         $this->validate($request,[
             'first_name' => 'required',
@@ -56,9 +57,13 @@ class AuthController extends Controller
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
-            'g-recaptcha-response' => 'required|captcha',
+      //      'g-recaptcha-response' => 'required|captcha',
         ]);
+
         $code = str_random(6);
+        $file_name = $request->username.".png";
+        $name= $request->first_name." ".$request->last_name;
+        Avatar::create($name)->save(public_path('images/'.$file_name));
         User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -69,7 +74,7 @@ class AuthController extends Controller
             'role' => 1,
             'code' => $code,
             'active' => false,
-			'image' => 'avatar.png',
+			'image' => $file_name,
         ]);
     $name = $request->first_name. ' '. $request->last_name;
     $email  =$request->email;      

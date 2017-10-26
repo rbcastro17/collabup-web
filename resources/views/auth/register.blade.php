@@ -1,7 +1,7 @@
-@extends('master')
+@extends('layouts.outpage')
 
 @section('title')
-Register
+Registration | CollabUP
 @endsection
 
 @section('content')
@@ -10,15 +10,11 @@ Register
 <br>
 <form action="{{route('auth.register')}}" method="post" class="ui form" style="margin-top: -100px">
     {{csrf_field()}}
-    
-    
  <h4 class="ui horizontal divider header">
   <i class="user icon"></i>
   Personal Information
 </h4>
-   
    <br><br>
-    
   <div class="ui form">
   <div class="three fields">
      
@@ -39,8 +35,6 @@ Register
     
      </div>
 	</div>
-  
-
   <br>
    
    <div class="ui form">
@@ -54,11 +48,8 @@ Register
         <label for="">Username</label>
         <div><input type="text" name="username" id="username" placeholder="Username" value="{{Request::old('username')}}"></div>
     </div>
-    
     </div>
 	</div>
-  
-  
   <br>
    
    <div class="ui form">
@@ -79,11 +70,6 @@ Register
   
   <br><br>
    
-<h4 class="ui horizontal divider header">
-  <i class="circle notched icon"></i>
-  Captcha
-</h4>
-    
     <center>
     
     <div class="field{{$errors->has('g-recaptcha-response')? ' error' : ''}}">
@@ -91,10 +77,11 @@ Register
     </div>
     
     <br><br>
+    </center>
 
-    <button type="submit" class="ui green button">Submit</button>
+   <button type="reset" class="ui yellow button">Clear Fields</button> <button type="submit" class="ui blue button">Submit</button>
     
-     </center>
+
 </form>
 
 @endsection

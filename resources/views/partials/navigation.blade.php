@@ -20,6 +20,7 @@
 </form>
 @endif
       <div class="ui simple right dropdown item">
+      <img class="ui avatar image" src="{{asset('images/'.Auth::user()->image )}}">
         {{Auth::user()->first_name." ".Auth::user()->last_name}}
         <i class="dropdown icon"></i>
         <div class="menu">

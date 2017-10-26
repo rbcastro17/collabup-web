@@ -173,6 +173,8 @@ return [
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 		A6digital\Image\DefaultProfileImageServiceProvider::class,
         LaravelFCM\FCMServiceProvider::class,
+        Laravolt\Avatar\ServiceProvider::class,
+        
         //
 
         /*
@@ -247,6 +249,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
+        'Avatar'    => Laravolt\Avatar\Facade::class,
     ],
 
 ];

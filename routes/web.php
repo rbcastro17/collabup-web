@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test/registerpage', function(){
+return view('auth.register');    
+});
 
 
 Route::get('upload/onedrive', 'GroupController@fromfolder')->name('onedrive.page');
@@ -116,7 +119,7 @@ return view('dashboard');
 
 //Auth
 
-//Route::get('/signup', 'AuthController@getRegister')->name('register');
+Route::get('/signup', 'AuthController@getRegister')->name('register');
 
 Route::get('/signin', 'AuthController@getLogin')->name('login');
 

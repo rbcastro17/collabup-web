@@ -13,10 +13,44 @@
           @endif
           <a class="item" href="{{url('profile')}}">My Profile</a>
           @if(Auth::user()->role == 2)
-          <a class="item" href="{{url('groups')}}">Manage Groups</a>
+
+         
           <a class="item" href="{{url('calendar')}}">Manage Events</a> 
+          <div class="item">
+            <i class="dropdown icon"></i>
+            Groups
+            <div class="menu">
+            <a class="item" href="{{url('groups')}}"><font color="3f51b5">Manage Groups</font></a>  
+              <?php
+         $groups =  App\Group::where("group_owner", '=', Auth::user()->id)->get();
+?>
+@if($groups->count() == 0)
+ <a href="{{url('group/create')}}" class="item"> No Groups yet Create one now! </a>
+@else
+           @foreach($groups as $g)
+            <a class="item" href="{{url('group/'.$g->id)}}" data-tooltip="{{$g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group_name}}</font></a>
+   @endforeach        
+@endif                   
+            </div>
+          </div>
+
           @elseif(Auth::user()->role == 1)
-          <a class="item" href="{{url('groups')}}">My Groups</a>
+
+          <div class="item">
+            <i class="dropdown icon"></i>
+            Groups
+            <div class="menu">
+            <a class="item" href="{{url('groups')}}"><font color="3f51b5">All Groups</font></a>  
+              <?php
+         $groups =  App\Member::where("user_id", '=', Auth::user()->id)->get();
+?>
+           @foreach($groups as $g)
+            <a class="item" href="{{url('group/'.$g->id)}}" data-tooltip="{{$g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group->group_name}}</font></a>
+   @endforeach        
+                   
+            </div>
+          </div>
+
           <a class="item" href="{{url('discover/category')}}">Discover!</a>
           <a class="item" href="{{url('calendar')}}">Events</a> 
           @endif

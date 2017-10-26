@@ -26,7 +26,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>
-		CollabUp | Collaboration at its finest
+		@yield('title')
 		</title>
   <style type="text/css">
 
@@ -122,11 +122,7 @@
 	
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/semantic.min.js')}}"></script>
-  <!--
-  <script src="{{asset('js/visibility.js')}}"></script>
-  <script src="{{asset('js/sidebar.js')}}"></script>
-  <script src="{{asset('js/transition.js')}}"></script>
--->
+
   <link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/semantic.min.css')}}">
 	
@@ -260,10 +256,9 @@ $(function() {
 
         </script>
 
-
 <div class="ui huge top fixed hidden menu">
   <div class="ui  container">
-    <a href="#home"class="active item">CollabUP</a>
+    <a href="{{url('/')}}"class="active item">CollabUP</a>
     <a href="#work" class="item">About Us</a>
     <a href="#company" class="item">What is CollabUp?</a>
  
@@ -281,126 +276,21 @@ $(function() {
 
 <!-- Page Contents -->
 <div class="pusher">
-  <div class="ui inverted vertical masthead landing-image center aligned segment">
-
-
-
-    <div  class="ui text container">
-      <h1 class="ui inverted header">
-      <p style="font-size: 100px"> <font color="#03a9f4"> CollabUp</font> </p>
-      </h1> 
-      <h2><font color="#2196f3">Collaboration at its finest.</font></h2>
-
-    </div>
-
-  </div>
-<div id="start" class="ui vertical stripe segment">
-
- <div class="ui middle aligned stackable grid container">
-
-      <div class="row">
-
-        <div class="eight wide column">
-
-<form action="{{route('auth.register')}}" method="post" class="ui form" style="margin-top: -100px">
-    {{csrf_field()}} 
- <h4 class="ui horizontal divider header">
-  <i class="user icon"></i>
-  Personal Information
-</h4> 
-   <br>
-  <div class="ui form">
-  <div class="three fields">
-     
-     <div class="field{{$errors->has('first_name')? ' error' : ''}}">
-        <label for="">First Name</label>
-        <div><input type="text" name="first_name" id="first_name" placeholder="First Name" value="{{Request::old('first_name')}}">
-        </div>
-    </div>
-    <div class="field{{$errors->has('middle_name')? ' error' : ''}}">
-        <label for="">Middle Name</label>
-        <div><input type="text" name="middle_name" id="middle_name" placeholder="Middle Name" value="{{Request::old('middle_name')}}">			</div>
-    </div>
-    <div class="field{{$errors->has('last_name')? ' error' : ''}}">
-        <label for="">Last Name</label>
-        <div><input type="text" name="last_name" id="last_name" placeholder="Last Name" value="{{Request::old('last_name')}}">
-        </div>
-    </div>
-    
-     </div>
-	</div>
-
-  <br>
-   
-   <div class="ui form">
-  <div class="two fields">
-    
-    <div class="field{{$errors->has('email')? ' error' : ''}}">
-        <label for="">Email</label>
-        <div><input type="email" name="email" id="email" placeholder="Email" value="{{Request::old('email')}}"></div>
-    </div>
-    <div class="field{{$errors->has('username')? ' error' : ''}}">
-        <label for="">Username</label>
-        <div><input type="text" name="username" id="username" placeholder="Username" value="{{Request::old('username')}}"></div>
-    </div>    
-    </div>
-	</div>
-   
-   <div class="ui form">
-  <div class="two fields">
-    
-    <div class="field{{$errors->has('password')? ' error' : ''}}">
-        <label for="">Password</label>
-        <div><input type="password" name="password" id="password" placeholder="Password"></div>
-    </div>
-    <div class="field">
-        <label for="">Confirm Password</label>
-        <div><input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
-        </div>
-    </div>
-    
-    </div>
-	</div>
-  
-   
-<h4 class="ui horizontal divider header">
-  <i class="circle notched icon"></i>
-  Captcha
-</h4>
-    <center>
-    <div class="field{{$errors->has('g-recaptcha-response')? ' error' : ''}}">
-        {!! app('captcha')->display() !!}
-    </div>  
+  <div class="ui center aligned segment">
 <br>
-    <button type="submit" class="ui green button">Sign Me Up!</button>
-     </center>
-</form>
+<br>
+<br>
+<br>
+<br>
+<br>
+  @yield('content')
 
- </div>
-
- <div class="eight wide column ">
-<h1 class="ui horizontal divider header">Already have an account?</h1>
-<form action="{{route('auth.login')}}" method="post" class="ui form">
-{{csrf_field()}}
-    
-    <div class="field{{$errors->has('email')? ' error':''}}">
-        <label for="">Email</label>
-        <div class="ui left icon input"><input type="email" name="email" id="email" placeholder="Email"><i class="mail icon"></i></div>
-    </div>
-    <div class="field{{$errors->has('password')? ' error':''}}">
-        <label for="">Password</label>
-        <div class="ui left icon input"><input type="password" name="password" id="password" placeholder="Password"><i class="icon lock"></i></div>
-    </div>
-    <br>
-    <button type="submit" class="ui green button">Login</button>
-</form>
-    </div>
-
-    </div>
 
   </div>
-  </div>
-      
+<!--Yield Content here-->
+
+
+
   <div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui stackable inverted divided equal height stackable grid">

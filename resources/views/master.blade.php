@@ -40,26 +40,21 @@
         {{-- Content--}}
         <div class="ui two column grid stackable container">
             @if(Auth::check())
-            <div class="four wide column">
-                <br>
-                <br>
-                <br>
+            <div class="two wide column">
                 <br>
                 <br>
                 @include('partials.side-navigation')
             </div>
-            @endif
-            <div class="twelve wide centered column">
-                <div class="wrapper">
-                    {{-- Main Content --}}
-
+           
+            <div class="fourteen wide centered column">
                     @include('partials.alert')
                     <br>
                     @yield('content')
-                </div>
             </div>
+              
         </div>
         <script src="//code.jquery.com/jquery.js"></script>
         @include('partials.js')
+        @endif
     </body>
 </html>
