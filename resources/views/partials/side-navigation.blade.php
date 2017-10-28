@@ -20,7 +20,7 @@
             <i class="dropdown icon"></i>
             Groups
             <div class="menu">
-            <a class="item" href="{{url('groups')}}"><font color="3f51b5">Manage Groups</font></a>  
+            <a class="item" href="{{url('groups')}}"><font color="3f51b5">Manage Group(s)</font></a>  
               <?php
          $groups =  App\Group::where("group_owner", '=', Auth::user()->id)->get();
 ?>
