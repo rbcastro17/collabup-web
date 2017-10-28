@@ -117,17 +117,7 @@
     .landing-image {
     background-image: url('<?php echo asset("assets/collab-bg.jpg")?>') !important;
     background-size: cover !important;
-<<<<<<< HEAD
 }
-=======
-    background-color: rgba(0, 0, 0, 0.5);
-    
-}
-
-
-
-
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
   </style>	
 	
 		<script src="{{asset('js/jquery.min.js')}}"></script>
@@ -139,12 +129,119 @@
 -->
   <link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/semantic.min.css')}}">
-<<<<<<< HEAD
 	
-=======
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
+ <script>
+  $(document)
+    .ready(function() {
 
+      // fix menu when passed
+      $('.masthead')
+        .visibility({
+          once: false,
+          onBottomPassed: function() {
+            $('.fixed.menu').transition('fade in');
+          },
+          onBottomPassedReverse: function() {
+            $('.fixed.menu').transition('fade out');
+          }
+        })
+      ;
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item')
+      ;
+
+    })
+  ;
+  </script>
+
+<!-- Smooth Scrolling JS-->
+<script>
+window.scroll({
+  top: 2500, 
+  left: 0, 
+  behavior: 'smooth' 
+});
+
+window.scrollBy({ 
+  top: 100, // could be negative value
+  left: 0, 
+  behavior: 'smooth' 
+});
+
+document.querySelector('.hello').scrollIntoView({ 
+  behavior: 'smooth' 
+});
+
+</script>
+<script>
+
+$(function() {
+	var $window = $(window), $document = $(document),
+		transitionSupported = typeof document.body.style.transitionProperty === "string", // detect CSS transition support
+		scrollTime = 1; // scroll time in seconds
+
+	$(document).on("click", "a[href*=#]:not([href=#])", function(e) {
+		var target, avail, scroll, deltaScroll;
+    
+		if (location.pathname.replace(/^\//, "") == this.pathname.replace(/^\//, "") && location.hostname == this.hostname) {
+			target = $(this.hash);
+			target = target.length ? target : $("[id=" + this.hash.slice(1) + "]");
+
+			if (target.length) {
+				avail = $document.height() - $window.height();
+
+				if (avail > 0) {
+					scroll = target.offset().top;
+          
+					if (scroll > avail) {
+						scroll = avail;
+					}
+				} else {
+					scroll = 0;
+				}
+
+				deltaScroll = $window.scrollTop() - scroll;
+
+				// if we don't have to scroll because we're already at the right scrolling level,
+				if (!deltaScroll) {
+					return; // do nothing
+				}
+
+				e.preventDefault();
+				
+				if (transitionSupported) {
+					$("html").css({
+						"margin-top": deltaScroll + "px",
+						"transition": scrollTime + "s ease-in-out"
+					}).data("transitioning", scroll);
+				} else {
+					$("html, body").stop(true, true) 
+					.animate({
+						scrollTop: scroll + "px"
+					}, scrollTime * 1000);
+					
+					return;
+				}
+			}
+		}
+	});
+
+	if (transitionSupported) {
+		$("html").on("transitionend webkitTransitionEnd msTransitionEnd oTransitionEnd", function(e) {
+			var $this = $(this),
+				scroll = $this.data("transitioning");
+			
+			if (e.target === e.currentTarget && scroll) {
+				$this.removeAttr("style").removeData("transitioning");
+				
+				$("html, body").scrollTop(scroll);
+			}
+		});
+	}
+});
+</script>
 
 </head>
 <body class="landing">      
@@ -173,27 +270,16 @@
 </div>
     <div class="right menu">
       <div class="item">
-<<<<<<< HEAD
         <a class="fluid ui button" href="{{url('signin')}}">Log in</a>
       </div>
       <div class="item">
         <a class="ui primary button" href="{{url('signup')}}">Sign Up</a>
-=======
-        
-        <div class="ui buttons">
-  <a class="ui purple button" href="{{url('signup')}}">Sign Up</a>
-  <div class="or"></div>
-  <a class="ui teal button" href="{{url('signin')}}">Login</a>
-</div>
-
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
       </div>
     </div>
   </div>
 </div>
 
 <!-- Page Contents -->
-<<<<<<< HEAD
 <div class="pusher">
   <div class="ui inverted vertical masthead landing-image center aligned segment">
 
@@ -204,18 +290,6 @@
       <p style="font-size: 100px"> <font color="#03a9f4"> CollabUp</font> </p>
       </h1> 
       <h2><font color="#2196f3">Collaboration at its finest.</font></h2>
-=======
-
-
-<div class="pusher">
-  <div class="ui inverted vertical masthead landing-image center aligned segment">
-
-    <div  class="ui text container">
-      <h1 class="ui inverted header">
-      <p style="font-size: 100px">  CollabUp </p>
-      </h1> 
-      <h2>Collaboration at its finest.</h2>
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
     </div>
 
@@ -226,11 +300,7 @@
 
       <div class="row">
 
-<<<<<<< HEAD
         <div class="eight wide column">
-=======
-        <div class="eight wide inverted column">
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
 <form action="{{route('auth.register')}}" method="post" class="ui form" style="margin-top: -100px">
     {{csrf_field()}} 
@@ -330,15 +400,7 @@
 
   </div>
   </div>
-<<<<<<< HEAD
       
-=======
-
-<div class="ui inverted">
-
-
-
->>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
   <div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui stackable inverted divided equal height stackable grid">
