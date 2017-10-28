@@ -117,7 +117,17 @@
     .landing-image {
     background-image: url('<?php echo asset("assets/collab-bg.jpg")?>') !important;
     background-size: cover !important;
+<<<<<<< HEAD
 }
+=======
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+
+
+
+
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
   </style>	
 	
 		<script src="{{asset('js/jquery.min.js')}}"></script>
@@ -129,7 +139,10 @@
 -->
   <link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/semantic.min.css')}}">
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
 
 
@@ -160,16 +173,27 @@
 </div>
     <div class="right menu">
       <div class="item">
+<<<<<<< HEAD
         <a class="fluid ui button" href="{{url('signin')}}">Log in</a>
       </div>
       <div class="item">
         <a class="ui primary button" href="{{url('signup')}}">Sign Up</a>
+=======
+        
+        <div class="ui buttons">
+  <a class="ui purple button" href="{{url('signup')}}">Sign Up</a>
+  <div class="or"></div>
+  <a class="ui teal button" href="{{url('signin')}}">Login</a>
+</div>
+
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
       </div>
     </div>
   </div>
 </div>
 
 <!-- Page Contents -->
+<<<<<<< HEAD
 <div class="pusher">
   <div class="ui inverted vertical masthead landing-image center aligned segment">
 
@@ -180,6 +204,18 @@
       <p style="font-size: 100px"> <font color="#03a9f4"> CollabUp</font> </p>
       </h1> 
       <h2><font color="#2196f3">Collaboration at its finest.</font></h2>
+=======
+
+
+<div class="pusher">
+  <div class="ui inverted vertical masthead landing-image center aligned segment">
+
+    <div  class="ui text container">
+      <h1 class="ui inverted header">
+      <p style="font-size: 100px">  CollabUp </p>
+      </h1> 
+      <h2>Collaboration at its finest.</h2>
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
     </div>
 
@@ -190,7 +226,11 @@
 
       <div class="row">
 
+<<<<<<< HEAD
         <div class="eight wide column">
+=======
+        <div class="eight wide inverted column">
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
 
 <form action="{{route('auth.register')}}" method="post" class="ui form" style="margin-top: -100px">
     {{csrf_field()}} 
@@ -290,7 +330,15 @@
 
   </div>
   </div>
+<<<<<<< HEAD
       
+=======
+
+<div class="ui inverted">
+
+
+
+>>>>>>> 0aad79ff757334aff458e72d6544ac06a87c5b33
   <div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui stackable inverted divided equal height stackable grid">
