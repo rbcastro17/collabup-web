@@ -163,6 +163,7 @@ class MobileController extends Controller
 			"user_id" => $id,
 			"name"	=> $user->first_name.' '.$user->last_name,
 			"body" => $post->body,
+			"image" => asset('image/',$post->user->image),
 			"time" => $post->created_at->diffForHumans()
 		));
 	}
