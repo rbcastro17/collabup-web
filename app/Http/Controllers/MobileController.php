@@ -157,11 +157,11 @@ class MobileController extends Controller
 	$posts=	Post::where('group_id',$id)->orderBy('created_at', 'desc')->get();
 	$result = array();
 	foreach($posts as $post){
-	$user = User::where('id', $post->user_id)->first();	
+		
 		array_push($result, array(
 			"post_id" => $post->id,
 			"user_id" => $id,
-			"name"	=> $user->first_name.' '.$user->last_name,
+			"name"	=> $post->user->first_name.' '.$post->user->last_name,
 			"body" => $post->body,
 			"image" => asset('image/',$post->user->image),
 			"time" => $post->created_at->diffForHumans()
