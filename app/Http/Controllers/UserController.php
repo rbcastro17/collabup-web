@@ -54,7 +54,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-/*
+
 	public function sendForget(Request $request){
 	//Mail::to($request->email)->send(new );
 	}
@@ -66,7 +66,7 @@ class UserController extends Controller
 	public function forget_password($code){
 
 	}
-*/
+
 	public function upload_picture(Request $request, $id)
 	{
 

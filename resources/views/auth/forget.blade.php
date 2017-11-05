@@ -1,11 +1,11 @@
 @extends('master')
 
 @section('title')
-Login
+Forget Your Password
 @endsection
 
 @section('content')
-<form action="{{route('auth.login')}}" method="post" class="ui form">
+<form action="{{route('sendforgetcode')}}" method="post" class="ui form">
 {{csrf_field()}}
     <div class="ui segment">
     <div class="field{{$errors->has('email')? ' error':''}}">

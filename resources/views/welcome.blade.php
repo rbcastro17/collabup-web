@@ -394,8 +394,9 @@ $(function() {
     <br>
     <button type="submit" class="ui green button">Login</button>
 </form>
+ <center><a href="{{url('/forgetpassword')}}"><h4>Forgot your Password?</h4></a></center>
     </div>
-
+            
     </div>
 
   </div>

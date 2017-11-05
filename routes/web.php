@@ -321,7 +321,7 @@ Route::post('mobile/setok', 'MobileController@hasChat');
 //----------------------------------------------------------------------------------------
 Route::get('doChange/{code}', 'UserController@forget_password');
 
-Route::post('forgetpage', 'UserController@forgetpage');
+Route::get('forgetpassword', 'UserController@forgetpage');
 
 Route::get('get_unread', function(){
        return Auth::user()->unreadNotifications;
