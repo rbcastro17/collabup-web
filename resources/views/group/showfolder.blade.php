@@ -25,7 +25,7 @@
     </style>
 
     <script type="text/javascript">
-      var developerKey = 'AIzaSyCfD_BDKlRfJZvD_sdaLan0R615bm3GxZs';
+      var developerKey = 'AIzaSyBP14aVsZj67TWB2d3I7ZRkvzQhCs0dkII';
      var clientId = "143151261536-nqvf0q82o4noeo517hlqlhlge5i9fq1c.apps.googleusercontent.com";
 
       var scope = [
