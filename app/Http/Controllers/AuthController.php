@@ -65,7 +65,7 @@ class AuthController extends Controller
         $name= $request->first_name." ".$request->last_name;
     
     
-    dd($image_url);
+   // dd($image_url);
         User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
