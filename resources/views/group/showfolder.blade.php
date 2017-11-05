@@ -31,8 +31,9 @@
       var scope = [
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/photos',
-        'https://www.googleapis.com/auth/youtube' 
-      ];
+        'https://www.googleapis.com/auth/drive.file'
+   //      'https://www.googleapis.com/auth/youtube' 
+     ];
       var authApiLoaded = false;
       var pickerApiLoaded = false;
       var oauthToken;
@@ -42,6 +43,7 @@
       function onApiLoad() {
         gapi.load('auth', {'callback': onAuthApiLoad});
         gapi.load('picker', {'callback': onPickerApiLoad});
+  
       }
 
       function onAuthApiLoad() {
@@ -55,7 +57,7 @@
       function handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
           oauthToken = authResult.access_token;
-          createPicker(viewIdForhandleAuthResult, true);
+            createPicker(viewIdForhandleAuthResult, true);
         }
       }
       // Create and render a Picker object for picking user Photos.
