@@ -57,13 +57,15 @@ class AuthController extends Controller
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
-      //      'g-recaptcha-response' => 'required|captcha',
+           'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $code = str_random(6);
         $file_name = $request->username.".png";
         $name= $request->first_name." ".$request->last_name;
-        Avatar::create($name)->save(public_path('images/'.$file_name));
+    
+    
+    dd($image_url);
         User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -74,7 +76,7 @@ class AuthController extends Controller
             'role' => 1,
             'code' => $code,
             'active' => false,
-			'image' => $file_name,
+			'image' => 'avatar.png',
         ]);
     $name = $request->first_name. ' '. $request->last_name;
     $email  =$request->email;      
