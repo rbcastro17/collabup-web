@@ -27,7 +27,7 @@
     <script type="text/javascript">
       var developerKey = 'AIzaSyBP14aVsZj67TWB2d3I7ZRkvzQhCs0dkII';
      var clientId = "821660307361-afujlp3gvd3mi2mmc10k087f5d38hf0j.apps.googleusercontent.com";
-
+      //client secret : f5kzYzGpvAdhDftowfWDBSNS
       var scope = [
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/photos',
