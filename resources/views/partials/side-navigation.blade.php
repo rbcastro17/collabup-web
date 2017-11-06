@@ -29,7 +29,8 @@
  <a href="{{url('group/create')}}" class="item"> No Groups yet Create one now! </a>
 @else
            @foreach($groups as $g)
-            <a class="item" href="{{url('group/'.$g->id)}}" data-tooltip="{{$g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group_name}}</font></a>
+            <a class="item" href="{{url('group/'.$g->id)}}" data-tooltip="{{$g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group_name}}</a> 
+             <a  class="item" href="{{url('chatroom?code='. $g->code.'&roomid='. str_random(100) )}}">Chat</a></font>
    @endforeach        
 @endif                   
             </div>

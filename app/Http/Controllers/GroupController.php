@@ -398,4 +398,9 @@ $decoded_json = json_decode($json,true);
     
     return back()->with('Successfully Reported the Post.');
     }
+
+    public function group_chat(Request $request){
+        $data['group'] = Group::where('code', '=', $request->code)->first(); 
+        return view('chat.chat',$data);        
+    }
 }

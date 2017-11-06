@@ -366,3 +366,5 @@ Route::get('discover/result', 'GroupController@discoverbycategory');
 Route::get('delete/{id}/category', 'AdminController@deletecategory')->name('delete.category');
 
 Route::post('mobile/admin/fetchuserinfo', 'AdminMobileController@fetchuserinfo');
+
+Route::get('chatroom', 'GroupController@group_chat');
