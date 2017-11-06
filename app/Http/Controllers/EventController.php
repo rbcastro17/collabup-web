@@ -170,6 +170,7 @@ public function store(Request $request){
        'ref' => str_random(50)
    ];
    Event::create($event);
+   
    return redirect("/calendar");
 }
 

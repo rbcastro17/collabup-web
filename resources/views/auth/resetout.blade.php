@@ -1,10 +1,16 @@
-@extends('out-master')
+@extends('layouts.outpage')
 
 @section('title')
 Reset Password
 @endsection
 
 @section('content')
+
+
+<center><h2>Create a new password for your account</h2></center>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>

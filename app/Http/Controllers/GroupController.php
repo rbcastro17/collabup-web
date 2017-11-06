@@ -356,11 +356,10 @@ public function fromfolder(Request $request){
 }
 
 public function saveonedrive(Request $request){
-//dd(Auth::user());
     $folder_id = $request->folder_id;
 $json = $request->result_upload;   
 $decoded_json = json_decode($json,true);
-//dd($decoded_json['value'][0]['name']);
+
     $file = new Files;
     $file->folder_id = $folder_id;
     $file->file_name = $decoded_json['value'][0]['name'];

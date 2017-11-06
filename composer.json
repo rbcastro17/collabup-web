@@ -19,7 +19,8 @@
         "fxp/composer-asset-plugin": "^1.3",
         "cmgmyr/messenger": "^2.14",
         "brozot/laravel-fcm": "^1.2",
-        "laravolt/avatar": "^2.0"
+        "laravolt/avatar": "^2.0",
+        "needim/noty": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

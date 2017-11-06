@@ -28,6 +28,7 @@ use App\Mail\SendForgetPassword;
 
 use Illuminate\Support\Facades\Mail;
 
+use App\AppNotification;
 
 use App\GroupRequest;
 class UserController extends Controller
@@ -49,7 +50,7 @@ class UserController extends Controller
         $user->role = 2; //2 = Head User, 3 = Admin
         $user->save();
 
-		Member::where('email',$user->email)->delete(); 
+//		Member::where('email',$user->email)->delete(); 
 
         return redirect()->back();
     }
@@ -59,8 +60,10 @@ class UserController extends Controller
 	//Mail::to($request->email)->send(new );
 	}
 
+	
 	public function forgetpage(){
-	return view('auth.forget');
+	//dd($_SESSION);
+		return view('auth.forget');
 	}
 
 	public function forget_password($code){
@@ -209,5 +212,21 @@ return view('auth.resetout',$data);
 	$data['posts'] = Post::where('user_id', Auth::user()->id)->latest()->paginate(15);
 	return view('user.view-profile',$data);
    }
+
+   public function notificationpage(){
+
+		$data['notifications'] = AppNotification::where([['unread','=' , true], ['reciever_id' ,'=', Auth::user()->id]])->get();
+		return view('notification.index',$data);
+   }
+
+   public function readpostnotification(Request $request){
+
+	AppNotification::where('ref', '=', $request->ref)->update(['unread' => false]);
+	$notif = AppNotification::where('ref','=', $request->ref)->first();
+	$data['group_id'] = $notif->group_id;
+	$data['post'] = Post::where('ref', '=', $notif->ref)->first();	
+	//dd($data['post']);
+	return view('notification.post', $data);
+	}   
 
 }

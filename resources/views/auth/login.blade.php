@@ -3,7 +3,13 @@
 @section('title')
 Login
 @endsection
-
+<center><h2>Login your account</h2></center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 @section('content')
 <form action="{{route('auth.login')}}" method="post" class="ui form">
 {{csrf_field()}}
@@ -17,7 +23,7 @@ Login
         <div class="ui left icon input"><input type="password" name="password" id="password" placeholder="Password"><i class="icon lock"></i></div>
     </div>
     <br>
-    <button type="submit" class="ui green button">Submit</button>
+    <button type="submit" class="ui blue button">Sign in</button>
     </div>
 </form>
 @endsection

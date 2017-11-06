@@ -1,3 +1,12 @@
+
+<script src="//code.jquery.com/jquery.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"> </script>
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <div class="ui fixed inverted menu">
     <div class="ui container">
       <a href="{{url('/')}}" class="header item">
@@ -5,12 +14,46 @@
         CollabUp
       </a>
       <a href="{{url('/')}}" class="item">Home</a>
+    
+      <script>
+
+   var pusher = new Pusher('5d377285b7b6c50f7729', {
+        encrypted: true,
+        cluster: 'ap1'
+      });
+      
+      var channel = pusher.subscribe('{{Auth::user()->id}}');
+  
+</script>
+      <?php
+      $notif = App\AppNotification::where([['reciever_id', '=', Auth::user()->id], ['unread', '=', true]])->get();
+      $notifCount = $notif->count();
+      ?>
+      <script>
+      channel.bind('App\\Events\\SendAppNotification', function(data){
+        var ExistingNotif = Number(document.getElementById("notif-count").innerHTML);
+        console.log(ExistingNotif);
+        var currCount = ExistingNotif + 1 ;
+        toastr.success('New Notification')
+
+        toastr.options.onclick = function() { 
+
+        document.getElementById("notif-count").innerHTML= currCount;
+});
+      </script>
+      
+      <a href="{{url('notifications')}}" class="item" ><i class="alarm icon"> 
+      @if($notif->count() > 0)
+      <span id="notif-count" class="badge">{{$notif->count()}}</span>
+      @endif
+      </i></a>
 <div class="item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 @if(Auth::check())
+
 @if(Auth::user()->role != 3)
 <form action="{{action('GroupController@showsearchresult')}}" method="GET">
 <div class="ui tiny icon input">

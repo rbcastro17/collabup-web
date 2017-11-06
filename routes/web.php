@@ -368,3 +368,8 @@ Route::get('delete/{id}/category', 'AdminController@deletecategory')->name('dele
 Route::post('mobile/admin/fetchuserinfo', 'AdminMobileController@fetchuserinfo');
 
 Route::get('chatroom', 'GroupController@group_chat');
+
+Route::get('notifications', 'UserController@notificationpage');
+
+Route::get('post', 'UserController@readpostnotification');
+

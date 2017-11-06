@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.outpage')
 
 @section('title')
 Forget Your Password

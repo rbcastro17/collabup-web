@@ -17,19 +17,7 @@ jQuery(document).ready(function($) {
 $isMember;
 ?>
 
-@if($posts->count() == 0)
-&nbsp;
-@else
-@foreach($posts as $post)
-    <script>
-function showEditModal-{{$post->id}}(){
- //alert('Hey');
-  $('.ui.modal.edit-{{$post->id}}')
-  .modal('show');
-}
-</script>
-@endforeach
-@endif
+
 <?php
 $isMember =false;
 $requestSent = false;
@@ -62,6 +50,7 @@ foreach($requests as $request){
                     <div class ="ui two column grid">
                         <div class="field{{$errors->has('body')? ' error':''}} thirteen wide column">
                             <input type="text" name="body" id="body" placeholder="Do you have anything in mind?" value="{{Request::old('body')}}">
+                            <input type="hidden" name="group_id" value="{{$group->id}}"/>
                         </div>
                         <div class="field right one wide column">
                             <button type="submit" class="ui green extra huge button"><i class="chat icon"></i></button>
