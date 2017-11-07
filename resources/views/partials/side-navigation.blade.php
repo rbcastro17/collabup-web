@@ -68,9 +68,10 @@
         
         <a class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="description"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group->group_name}}</font></a>
       -  <a  class="item" href="{{url('chatroom?code='. $g->group->code.'&roomid='. str_random(100) )}}">Chat</a>
-        </div>
+      
       
       @endforeach
+      </div>
       </div>
           @if(Auth::user()->role =1 || Auth::user()->role = 2)
           <a class="item" href="{{route('current.announcement')}}">Announcements</a>
