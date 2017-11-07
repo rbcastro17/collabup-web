@@ -63,13 +63,15 @@
    <?php 
       $groups = App\Member::where('user_id', '=', Auth::user()->id)->get();
    ?>
+   <div class="menu">
        @foreach($groups as $g)
-        <div class="menu">
+        
         <a class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="description"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group->group_name}}</font></a>
       -  <a  class="item" href="{{url('chatroom?code='. $g->group->code.'&roomid='. str_random(100) )}}">Chat</a>
         </div>
-        </div>
+      
       @endforeach
+      </div>
           @if(Auth::user()->role =1 || Auth::user()->role = 2)
           <a class="item" href="{{route('current.announcement')}}">Announcements</a>
          
