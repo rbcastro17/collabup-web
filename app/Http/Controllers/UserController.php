@@ -34,6 +34,9 @@ use App\GroupRequest;
 
 use App\Event;
 
+use App\Files;
+
+
 class UserController extends Controller
 {
     /*
