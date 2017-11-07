@@ -89,7 +89,8 @@ class AdminController extends Controller
 
 	public function AnnouncementPage(){
 		return view ('admin.announcement');
-	}
+    }
+    
        public function announcement(Request $request){
         $this->validate($request, ['body' => 'required|max:1000']);
         

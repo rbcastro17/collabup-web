@@ -10,7 +10,13 @@ use Auth;
 
 use App\AuditTrail;
 
+use App\Events\SendAppNotification;
+
 use Illuminate\Support\Facades\DB;
+
+use App\User;
+
+use App\AppNotification;
 
 class AnnouncementController extends Controller
 {
@@ -63,13 +69,30 @@ class AnnouncementController extends Controller
         'url' => route('audit.show.announcement', $ref) 
         ]
       );
+
+     $users = User::where([['role', '!=', 3], ['active', '=', true]])->get();
+
+     // dd($users);
+      foreach($users as $u){
+        AppNotification::create([
+            'user_id' => Auth::user()->id,
+            'reciever_id' => $u->id,
+            'ref' => $ref,
+            'group_id' => 0,
+            'type' => 3
+        ]);
+
+        event(new SendAppNotification(Auth::user()->id, $u->id, $ref, 0,3));
+      }
+
+
       return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id 
      * @return \Illuminate\Http\Response
      */
     public function show($id)

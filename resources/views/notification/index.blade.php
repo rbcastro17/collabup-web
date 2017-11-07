@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('title')
-
+Notifications ({{$notifications->count()}})
 @endsection
 
 @section('content')
@@ -10,7 +10,9 @@
 <h2>App Notification</h2>
 
 <div class="ui celled list">
-  
+  @if($notifications->count() == 0)
+  <h4>No New Notification</h4>
+  @else
   @foreach($notifications as $n)
 
   <div class="item">
@@ -37,6 +39,7 @@
       <button class="ui button" type="submit">See More...</button>
         </form>
       @elseif($n->type== 3)
+      Posted A New Announcement!
       <form action ="{{url('notification/announcement')}}">
      <input type="hidden" name="ref" value="{{$n->ref}}">
       <button class="ui button" type="submit">See More...</button>
@@ -48,5 +51,6 @@
     </div>
   </div>
   @endforeach
+  @endif
   </div>
 @endsection
