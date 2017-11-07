@@ -63,7 +63,11 @@ function showCreateAdmin(){
 <div class="ui middle aligned divided list">
   <div class="item">
     <div class="right floated content">
-      <a class="ui red button" href="{{route('user.deactivate', $user->id)}}">Remove</a>
+      <form action="{{route('delete.admin')}}" method="POST">
+      {{csrf_field()}}
+      <input type="hidden" name="id" value="{{$user->id}}"/>
+      <button class="ui red button" >Remove</button>
+      </form>
     </div>
    <img class="ui avatar image" src="/images/{{$user->image}}">
     <div class="content">

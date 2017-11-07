@@ -15,7 +15,13 @@ class AdminController extends Controller
 	public function index()
 	{  
 		return view('admin.index');
-	}
+    }
+    
+    public function deleteadmin(Request $request){
+        User::where('id', '=', $request->id)->delete();
+        return redirect()->back();
+    }
+
         public function addAdminPage(){
             return view('admin.addAdmin');
         }

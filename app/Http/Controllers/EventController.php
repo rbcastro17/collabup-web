@@ -197,6 +197,13 @@ public function edit($id){
 
 }
 public function update(Request $request){
+ //dd($request->group_id);
+    $this->validate($request,[
+        "start" => 'required',
+        "end" => 'required',
+        "body" => 'required',
+        "title" => 'required',
+    ]);
     $update = [
         "start_duration" => $request->start,
         "end_duration" => $request->end,
@@ -204,7 +211,8 @@ public function update(Request $request){
         "title" => $request->title    
     ];
     Event::where('id',$request->id)->update($update);
-    return redirect()->back();
+    //echo "Updated"; die();
+    return redirect('calendar');
 }
 
 public function destroy($id){

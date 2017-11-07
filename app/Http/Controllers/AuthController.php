@@ -18,11 +18,7 @@ use Illuminate\Support\Facades\Cache;
 
 use Illuminate\Support\Facades\Session;
 
-//use Mail;
-
 use App\Mail\Confirmation;
-
-//use App\PasswordReset;
 
 use Laravolt\Avatar\Facade as Avatar;
 
@@ -63,9 +59,7 @@ class AuthController extends Controller
         $code = str_random(6);
         $file_name = $request->username.".png";
         $name= $request->first_name." ".$request->last_name;
-    
-    
-   // dd($image_url);
+
         User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,

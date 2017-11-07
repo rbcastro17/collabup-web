@@ -1,7 +1,7 @@
-@extends('admin')
 
 @section('title')
 Dashboard | {{Auth::user()->first_name. " ". Auth::user()->last_name}}
+@extends('admin')
 @endsection
 
 @section('content')

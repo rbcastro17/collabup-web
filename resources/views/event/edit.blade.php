@@ -25,7 +25,7 @@ Editing {{$event->name}}
         <div class="field">
             <label for="">New Start Date : {{$event->startDateTime}}</label>
             <div class="ui left icon input">
-                <input type="datetime-local" name="start" id="start" value="{{$event->startDateTime}}">
+                <input type="datetime-local" name="start" id="start" value="{{$event->start_duration}}">
                 <i class="calendar icon"></i>
             </div>
         </div>

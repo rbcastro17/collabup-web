@@ -259,13 +259,19 @@ $(function() {
             setInterval(refreshToken, 3600000); // 1 hour 
 
         </script>
-
+<script>
+function showTerms(){
+  $('.ui.modal')
+  .modal('show')
+;
+}
+</script>
 
 <div class="ui huge top fixed hidden menu">
   <div class="ui  container">
     <a href="#home"class="active item">CollabUP</a>
     <a href="#work" class="item">About Us</a>
-    <a href="#company" class="item">What is CollabUp?</a>
+    <a href="#what-is-collabup" class="item">What is CollabUp?</a>
  
 </div>
     <div class="right menu">
@@ -361,8 +367,9 @@ $(function() {
     
     </div>
 	</div>
-  
-   
+  <center>
+ Registering you are agreeing in&nbsp; <button class="ui violet button" onClick="showTerms()">Terms and Condition </button>
+   </center>
 <h4 class="ui horizontal divider header">
   <i class="circle notched icon"></i>
   Captcha
@@ -377,6 +384,21 @@ $(function() {
 </form>
 
  </div>
+
+
+ <div class="ui modal">
+  <div class="header">Terms And Condition</div>
+  <div class="image content">
+    <img class="image" src="{{asset('images/logo')}}" />
+    <div class="description">
+      <p>
+      Any copyright, trademarks, patents and other Intellectual property seen or written on the application CollabUp belongs to the group of developers of team Coalesce. The rights in CollabUp are reserved for the team Coalesce. None is stated among the terms that allows any person the right or license to use the trademark or copyrights that is under the ownership of Coalesce. 
+      </p>
+    </div>
+  </div>
+</div>
+
+
 
  <div class="eight wide column ">
 <h1 class="ui horizontal divider header">Already have an account?</h1>
@@ -402,6 +424,19 @@ $(function() {
   </div>
   </div>
       
+  <div class="ui vertical stripe segment" id="what-is-collabup">
+    <div class="ui text container">
+      <h3 class="ui header">What is CollabUP?</h3>
+      <p>In our growing society, we are at the age of advancement. Modern technology is always moving forward, and with it, we are also progressing at a rapid rate. Most of the people of our generation are heavily depended on our modern technology. Due to this, people create more experiments or prototypes in order to fulfill a sole purpose, to be able to make human society a better place. Naturally, what people invent are what people need. The best technologies were created to bring people a feeling of ease.
+CollabUp is an application that deals with giving the people another means of Collaboration. The word CollabUp was derived from the words Collaboration and Upload. As we all know, collaboration is the action of doing something within a group of individuals, regardless of their gender, work, age, or any other attribute. As for Upload, it is an action of placing files into the web so that a person can share their works. And just like Uploading, CollabUp strives to reach its goal of helping improve collaboration between people of the same interests.
+CollabUp was developed by a team of developers called “Coalesce”. Coalesce means to “come together to create a mass or whole”.This describes how passionate we are on providing people with the collaboration they might need. It is as if we are to put something of ourselves into what we do, and what we do is to help people by giving them another way for humans to show collaboration.
+ </p>
+      <a class="ui large button">Read More</a>
+      
+    </div>
+  </div>
+
+
   <div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui stackable inverted divided equal height stackable grid">

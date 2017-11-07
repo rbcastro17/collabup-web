@@ -47,7 +47,7 @@
          $groups = App\Member::where("user_id", '=' , Auth::user()->id)->get();
               ?>
      @foreach($groups as $g)
-            <a  class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="{{ $g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i>{{$g->group->group_name}}</font></a>
+            <a  class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="{{ $g->group->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i>{{$g->group->group_name}}</font></a>
      @endforeach        
                    
             </div>
@@ -56,6 +56,14 @@
           <a class="item" href="{{url('discover/category')}}">Discover!</a>
           <a class="item" href="{{url('calendar')}}">Events</a> 
           @endif
+        <div class="item">
+        <i class="dropdown icon"></i>
+        Groups That I Have Joined
+        <div class="menu">
+        <a class="item" href="#" data-tooltip="description"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> Test Group</font></a>
+        </div>
+        </div>
+
           @if(Auth::user()->role =1 || Auth::user()->role = 2)
           <a class="item" href="{{route('current.announcement')}}">Announcements</a>
          

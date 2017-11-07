@@ -38,7 +38,7 @@ Edit Profile
 	<div class="field">
 	<h4>Change Password</h4>
 	<label for=""></label>
-		<div class="ui left icon input"><a> Current Password: **********  </a><i class="password icon"></i></div>
+		<div class="ui left icon input"><a href="{{route('resetpage')}}"> Current Password: **********  </a><i class="password icon"></i></div>
 	</div>
 
 @endsection

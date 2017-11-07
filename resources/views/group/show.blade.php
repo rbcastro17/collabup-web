@@ -13,24 +13,9 @@ jQuery(document).ready(function($) {
 
 <script src="{{asset('js/jquery.min.js')}}"></script>
 @section('content')
-<?php 
-$isMember;
-?>
-
 
 <?php
-$isMember =false;
 $requestSent = false;
-foreach($members as $member){
- if($member->user_id == Auth::user()->id){
-
-    $isMember = true;
-
-}else
-{
-$isMember = false;
-}
-}
 
 foreach($requests as $request){
     if($request->user_id = Auth::user()->id){
@@ -44,7 +29,7 @@ foreach($requests as $request){
     <div class="thirteen wide column">
         <div class="ui container">
             <div class="wrapper">
-<?php if($isMember || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
+<?php if($isAllowed || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
                 <form action="{{route('post.create',$group->id)}}" method="POST" class="ui large form">
                 <div class="ui segment">
                 {{csrf_field()}}
@@ -67,7 +52,7 @@ foreach($requests as $request){
 @if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
 <a href="{{url('createFolderPage',$group->id)}}" class="ui right labeled icon button"><i class="user icon"></i>Create Folder</a>
 @endif
-@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner|| $isMember)
+@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner|| $isAllowed)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Member Requests</a>
 <a href="{{route('invite', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Invite Users</a>
 
@@ -82,7 +67,7 @@ Members
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
 Requests
 </a>
-@elseif(!$isMember)
+@elseif(!$isAllowed)
 
 @if($requestSent)
 <a class="ui violet button" disabled>Request Sent</a>
@@ -145,7 +130,9 @@ Hey
                   <div class="content">
                     <div class="header" data-tooltip="View Profile Of {{$post->user->first_name}}"><h3><a href="{{route('group.member.profile', $post->user->id)}}">{{$post->user->first_name}} {{$post->user->last_name}} </a></h3>
                     @if(Auth::user()->role == 2 || Auth::user()->id == $post->user->id)
-                    <a  onclick="showEditModal-{{$post->id}}()"> Edit <i class="edit icon"></i>   </a> |
+                    <a href="{{url('/edit/'. $post->id.'/status/'.$group->id)}}">
+                    
+                     Edit <i class="edit icon"></i>   </a> |
                     <a href="{{route('status.delete',$post->id)}}">Delete <i class="erase icon"></i></a>
                     @endif
                     |<a href="#">Report<i class="protect icon"></i></a>
@@ -177,7 +164,7 @@ Hey
                 @endif
             <br>
 
-            <?php if($isMember || Auth::user()->role == 2):?>
+            <?php if($isAllowed || Auth::user()->role == 2):?>
             <form action="{{route('comment',['id'=> $group->id, 'post'=>$post->id])}}" method="POST" class="ui form">
                 <div class="field{{$errors->has('body')? ' error' : ''}}">
                     <textarea name="body" id="body" cols="30" rows="3" class="form-control" placeholder="Comment something here..."

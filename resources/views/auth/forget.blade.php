@@ -5,6 +5,13 @@ Forget Your Password
 @endsection
 
 @section('content')
+
+<br>
+<br>
+<br>
+<h2>It Seems that you have forgotten your password</h2>
+<br>
+<br>
 <form action="{{route('sendforgetcode')}}" method="post" class="ui form">
 {{csrf_field()}}
     <div class="ui segment">
