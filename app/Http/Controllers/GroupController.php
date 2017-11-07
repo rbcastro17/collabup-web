@@ -205,7 +205,13 @@ public function savelink(Request $request, $id){
     $members = Member::where('group_id', '=', $folder->group_id)->get();
       
     foreach($members as $m){
-        AppNotification::create(Auth::user()->id, $m->user_id,$ref,$m->group_id, 5);
+        AppNotification::create([
+            "user_id" => Auth::user()->id,
+            "reciever_id"=> $m->user_id,
+             "ref"=> $ref,
+             "group_id" =>$m->group_id,
+             "type" => 5
+        ]);
         event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
     }
 	return redirect()->route('folder.specific', $id);
@@ -386,13 +392,19 @@ $ref = str_random(40);
     $file->save();
 
     $folder = Folder::where('id', '=', $folder_id)->first();
-    $members = Member::where('group_id', '=', $folder)->get();
+    $members = Member::where('group_id', '=', $folder->group_id)->get();
     
     foreach($members as $m){
-        AppNotification::create(Auth::user()->id, $m->user_id,$ref,$m->group_id, $ref);
-        event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
-    }
-
+        AppNotification::create([
+           "user_id"=> Auth::user()->id, 
+            "reciever_id"=> $m->user_id,
+           "ref"=> $ref,
+            "group_id" => $m->group_id, 
+           "type"=> 5]);
+           event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
+        }
+        
+       
     return redirect()->route('folder.specific', $folder_id);      
 
 }
