@@ -48,6 +48,7 @@
               ?>
      @foreach($groups as $g)
             <a  class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="{{ $g->group->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i>{{$g->group->group_name}}</font></a>
+    -  <a  class="item" href="{{url('chatroom?code='. $g->group->code.'&roomid='. str_random(100) )}}">Chat</a></font>
      @endforeach        
                    
             </div>
@@ -59,11 +60,16 @@
         <div class="item">
         <i class="dropdown icon"></i>
         Groups That I Have Joined
+   <?php 
+      $groups = Member::where('user_id', '=', Auth::user()->id)->get();
+   ?>
+       @foreach($groups as $g)
         <div class="menu">
-        <a class="item" href="#" data-tooltip="description"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> Test Group</font></a>
+      <a class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="description"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i> {{$g->group->group_name}}</font></a>
+      -  <a  class="item" href="{{url('chatroom?code='. $g->group->code.'&roomid='. str_random(100) )}}">Chat</a></font>
         </div>
         </div>
-
+      @endforeach()
           @if(Auth::user()->role =1 || Auth::user()->role = 2)
           <a class="item" href="{{route('current.announcement')}}">Announcements</a>
          
