@@ -437,13 +437,14 @@ $ref = str_random(40);
     }
 
     public function group_chat(Request $request){
-
+        
         $data['group'] = Group::where('code', '=', $request->code)->first(); 
+        if($data['group']->hasChat == 'no'){
+            Group::where('code', '=', $request->code)->update(['hasChat'=>'yes']);
+        }
 
         return view('chat.chat',$data);        
     }
 
-        public function activatechat(){
-    //    echo
-    }
+
 }

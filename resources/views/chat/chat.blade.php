@@ -6,6 +6,8 @@
 @endsection
 
 <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
 <script>
   // Initialize Firebase
   // TODO: Replace with your project's customized code snippet
@@ -21,7 +23,6 @@ var database = firebase.database();
                 <?php
                 $group_roomid= $group->id."-".$group->group_name. "-".$group->code; 
                 ?>
-
 
     database.ref().child("{{$group_roomid}}").on('value', function(snapshot){
         if(snapshot.exists()){
@@ -44,34 +45,39 @@ var database = firebase.database();
     }); 
 
 
+
 function sendMessage(){
+    var dbRef = firebase.database();
 
-    var rootref = firebase.database().ref();
-    var childref = rootref.child({{$group_roomid}});
-    var storeref = childref.push();
+var contactsRef = dbRef.ref().child('{{$group_roomid}}');   
+contactsRef.push({
+  name: '{{Auth::user()->username}}',
+  msg: document.getElementById("messagetext").value
+}).then(function(){
+    document.getElementById("messagetext").value = " ";
+    var mydiv = $("#messagefeed");
+mydiv.scrollTop(mydiv.prop("scrollHeight"));
+});
 
-    storeref.set([
-        msg: 'Hello Again',
-        name: '{{Auth::user()->username}}'
-    ]);
-  //  document.getElementById("textareaID").value = '';
 }
+
+
 </script>   
 @section('content')
 <h3>Chat Room: {{$group->name}}</h3>
 
-@if($group->hasChat == "no")
-<a href="">Activate Chat FIrst</a>
-@endif
-<div class="ui list" id="messagefeed">
-
+<div class="ui list" id="messagefeed" style="
+overflow: auto; max-height: 400px;   
+    width: 100%;
+">
                         
             </div>   
 
 
 <div class="ui fluid large action input">
-<input id="messagetext" type="text" placeholder="Something to say...">
-<button class="ui button" onclick="sendMessage()">Send</button>
+<input id="messagetext" type="text" placeholder="Something to say..."  onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('btnsend').click()">
+<button id="btnsend"class="ui button" onclick="sendMessage()">Send</button>
 </div>
 
 @endsection
