@@ -9,6 +9,8 @@ use App\Member;
 use Carbon\Carbon;
 use FullCalendar;
 use Auth;
+use App\Events\SendAppNotification;
+use App\AppNotification;
 
 class EventController extends Controller
 {
@@ -159,18 +161,32 @@ public function index(){
 
 public function store(Request $request){
 
+    $ref = str_random(50);
+    $group_id = $request->group;
    $event = [
        'group_id' => $request->group,
        'event_author' => Auth::user()->id,
-       'group_id' => $request->group,
        'start_duration' => $request->start_date,
        'end_duration' => $request->end_date,
        'title' => $request->title,
        'body' => $request->body,
-       'ref' => str_random(50)
+       'ref' => $ref
    ];
    Event::create($event);
-   
+    
+   $members = Member::where('group_id', '=', $request->group)->get();
+   foreach($members as $m){
+
+    event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref,$group_id, 2));
+    AppNotification::create([
+        'user_id' => Auth::user()->id,
+        'reciever_id' => $m->user_id,
+        'ref' => $ref,
+        'group_id' => $group_id,
+        'type' => 2
+    ]);
+   }
+
    return redirect("/calendar");
 }
 

@@ -23,6 +23,7 @@ class PostController extends Controller
        $alert_head; 
        if($group->id == Auth::user()->id){
                 $members = Member::where('group_id', '=', $id)->get();
+                $alert_head = false; 
         }else{
            $members = Member::where([['group_id', '=', $id], ['user_id','!=', Auth::user()->id]])->get(); 
         $alert_head = true;

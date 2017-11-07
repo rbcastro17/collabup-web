@@ -36,14 +36,13 @@ foreach($requests as $request){
     }
 }
 
-
 ?>
 
 <div class="ui two column grid container stackable">
     <div class="thirteen wide column">
         <div class="ui container">
             <div class="wrapper">
-<?php if($isMember || Auth::user()->role==2):?>
+<?php if($isMember || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
                 <form action="{{route('post.create',$group->id)}}" method="POST" class="ui large form">
                 <div class="ui segment">
                 {{csrf_field()}}
@@ -63,10 +62,10 @@ foreach($requests as $request){
         </div>
 		 <div class="ui container">
              <div class="ui segment">
-@if(Auth::user()->role == 2)
+@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
 <a href="{{url('createFolderPage',$group->id)}}" class="ui right labeled icon button"><i class="user icon"></i>Create Folder</a>
 @endif
-@if(Auth::user()->role == 2 || $isMember)
+@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner|| $isMember)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Member Requests</a>
 <a href="{{route('invite', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Invite Users</a>
 
@@ -77,8 +76,9 @@ foreach($requests as $request){
 Members
 </a>
 
-@if(Auth::user()->role == 2)
+@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
+
 Requests
 </a>
 @elseif(!$isMember)

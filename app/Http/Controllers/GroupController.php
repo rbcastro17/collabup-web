@@ -235,8 +235,7 @@ public function showsearchresult(Request $request){
 $search = $request->search;
 if(Auth::user()->role == 2){
 $condition = array(
-                array('group_name', 'like', '%'.$search.'%'),
-                array('group_owner', '=', Auth::user()->id)
+                array('group_name', 'like', '%'.$search.'%')
              );
 }else{
 $condition = array(

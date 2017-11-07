@@ -32,20 +32,20 @@
       <script>
       channel.bind('App\\Events\\SendAppNotification', function(data){
         var ExistingNotif = Number(document.getElementById("notif-count").innerHTML);
-        console.log(ExistingNotif);
+
         var currCount = ExistingNotif + 1 ;
-        toastr.success('New Notification')
-
-        toastr.options.onclick = function() { 
-
+        toastr.success('New Notification');
+        
         document.getElementById("notif-count").innerHTML= currCount;
-});
+        
+  });
       </script>
       
       <a href="{{url('notifications')}}" class="item" ><i class="alarm icon"> 
-      @if($notif->count() > 0)
+      
+
       <span id="notif-count" class="badge">{{$notif->count()}}</span>
-      @endif
+      
       </i></a>
 <div class="item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  

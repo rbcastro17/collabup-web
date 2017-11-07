@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Mail;
 use App\AppNotification;
 
 use App\GroupRequest;
+
+use App\Event;
+
 class UserController extends Controller
 {
     /*
@@ -229,4 +232,24 @@ return view('auth.resetout',$data);
 	return view('notification.post', $data);
 	}   
 
-}
+	public function readeventnotification(Request $request){
+		
+			AppNotification::where('ref', '=', $request->ref)->update(['unread' => false]);
+			$notif = AppNotification::where('ref','=', $request->ref)->first();
+			$data['group_id'] = $notif->group_id;
+			$data['event'] = Event::where('ref', '=', $notif->ref)->first();	
+			
+			return view('notification.event', $data);
+			}   
+
+			public function readannouncementnotification(Request $request){
+				
+					AppNotification::where('ref', '=', $request->ref)->update(['unread' => false]);
+					$notif = AppNotification::where('ref','=', $request->ref)->first();
+
+					$data['event'] = Announcement::where('ref', '=', $notif->ref)->first();	
+					
+					return view('notification.announcement', $data);
+					}   
+
+		}

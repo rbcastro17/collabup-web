@@ -371,5 +371,9 @@ Route::get('chatroom', 'GroupController@group_chat');
 
 Route::get('notifications', 'UserController@notificationpage');
 
-Route::get('post', 'UserController@readpostnotification');
+Route::get('notification/post', 'UserController@readpostnotification');
+
+Route::get('notification/event', 'UserController@readeventnotification');
+
+Route::get('notification/announcement', 'UserController@readannouncementnotification');
 
