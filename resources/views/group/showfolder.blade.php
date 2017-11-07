@@ -93,6 +93,20 @@
         var json = JSON.parse(doc);
         document.getElementById('result_upload').value = doc;
         console.log(doc);
+        var request = gapi.client.request({
+   'path': '/drive/v3/files/' + json['id'] + '/permissions',
+   'method': 'POST',
+   'headers': {
+       'Content-Type': 'application/json'             
+   },
+   'body':{
+        'role': 'reader', // owner, writer, commenter
+        'type': 'anyone'
+   }
+});
+  request.execute(function(resp){
+    console.log(resp);
+  });
         document.getElementById('result').innerHTML = 'You Picked: '+json['name'];
       }
     </script>
