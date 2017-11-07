@@ -44,6 +44,14 @@ Notifications ({{$notifications->count()}})
      <input type="hidden" name="ref" value="{{$n->ref}}">
       <button class="ui button" type="submit">See More...</button>
         </form>
+
+      @elseif($n->type == 5)  
+      Uploaded A New File in {{$n->group->group_name}}
+      <form action ="{{url('notification/file')}}">
+     <input type="hidden" name="ref" value="{{$n->ref}}">
+      <button class="ui button" type="submit">See More...</button>
+        </form>
+      
       @else
 
       @endif

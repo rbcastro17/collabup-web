@@ -377,6 +377,8 @@ Route::get('notification/event', 'UserController@readeventnotification');
 
 Route::get('notification/announcement', 'UserController@readannouncementnotification');
 
+Route::get('notification/file', 'UserController@readfilenotification');
+
 Route::post('delete/admin/user', 'AdminController@deleteadmin')->name('delete.admin');
 
 Route::get('about', function(){

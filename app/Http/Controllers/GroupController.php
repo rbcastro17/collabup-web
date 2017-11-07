@@ -15,6 +15,8 @@ use App\Files;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Category;
+use App\Events\SendAppNotification;
+use App\AppNotification;
 
 class GroupController extends Controller
 {
@@ -181,14 +183,14 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
 	public function showFolder($id){
 		 $folders = Folder::where('id', $id)->first();
 		 $files = Files::where('folder_id',$id)->get();
-	
+        
 	return view('group.showfolder',['files'=> $files, 'folders'=>$folders]);	
 	}
 
 public function savelink(Request $request, $id){
     
     $result = json_decode($request->result_upload);
-  
+    $ref = str_random(40);
 	$data = new Files;
     $data->folder_id = $id;
     $data->file_name = $result->name;
@@ -196,9 +198,16 @@ public function savelink(Request $request, $id){
 	$data->download_link = $result->downloadUrl;
 	$data->view_link = $result->url;
 	$data->icon = $result->iconUrl;    
-    
+    $data->ref = $ref; 
     $data->save();
-		
+    
+    $folder = Folder::where('id', '=', $id)->first();
+    $members = Member::where('group_id', '=', $folder)->get();
+    
+    foreach($members as $m){
+        AppNotification::create(Auth::user()->id, $m->user_id,$ref,$m->group_id, $ref);
+        event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
+    }
 	return redirect()->route('folder.specific', $id);
 }
 public function getmembers($id){
@@ -365,16 +374,27 @@ public function saveonedrive(Request $request){
     $folder_id = $request->folder_id;
 $json = $request->result_upload;   
 $decoded_json = json_decode($json,true);
-
+$ref = str_random(40);
     $file = new Files;
     $file->folder_id = $folder_id;
     $file->file_name = $decoded_json['value'][0]['name'];
     $file->file_owner = Auth::user()->id;
     $file->icon = "https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png";
+    $file->ref = $ref;
     $file->view_link = $decoded_json['value'][0]["@microsoft.graph.downloadUrl"];
     $file->download_link = $decoded_json['value'][0]["@microsoft.graph.downloadUrl"];
     $file->save();
+
+    $folder = Folder::where('id', '=', $folder_id)->first();
+    $members = Member::where('group_id', '=', $folder)->get();
+    
+    foreach($members as $m){
+        AppNotification::create(Auth::user()->id, $m->user_id,$ref,$m->group_id, $ref);
+        event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
+    }
+
     return redirect()->route('folder.specific', $folder_id);      
+
 }
     public function discoverbycategorypage(){
         $data['cs'] = Category::where('id', '!=', 1)->get();

@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-New Announcement! | {{$event->title}}
+New File! 
 @endsection
 
 @section('content')
@@ -8,10 +8,10 @@ New Announcement! | {{$event->title}}
 <div class="ui styled fluid accordion">
   <div class="active title">
     <i class="dropdown icon"></i>
-   <h3>Announcement: {{$event->title}}     </h3>
+   <h3><a href="{{$file->view_link}}">Announcement: {{$file->file_name}} </a>    </h3>
   </div>
   <div class="active content">
-    <p>{{$event->body}}</p>
+    <a href="{{$file->download_link}}">Download This</a>
   </div>
   
 </div>

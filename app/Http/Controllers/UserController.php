@@ -251,5 +251,10 @@ return view('auth.resetout',$data);
 					
 					return view('notification.announcement', $data);
 					}   
-
+					public function readfilenotification(Request $request){
+						AppNotification::where('ref', '=', $request->ref)->update(['unread' => false]);
+						$notif = AppNotification::where('ref','=', $request->ref)->first();
+						$data['file'] = Files::where('ref', '=', $request->ref)->first();
+						return view('notification.file', $data);
+					}
 		}
