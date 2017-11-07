@@ -61,7 +61,7 @@
         <i class="dropdown icon"></i>
         Groups That I Have Joined
    <?php 
-      $groups = Member::where('user_id', '=', Auth::user()->id)->get();
+      $groups = App\Member::where('user_id', '=', Auth::user()->id)->get();
    ?>
        @foreach($groups as $g)
         <div class="menu">
