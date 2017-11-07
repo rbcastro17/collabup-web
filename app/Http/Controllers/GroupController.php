@@ -404,7 +404,7 @@ $decoded_json = json_decode($json,true);
         return view('chat.chat',$data);        
     }
 
-    public function activatechat(){
-        echo
+        public function activatechat(){
+    //    echo
     }
 }
