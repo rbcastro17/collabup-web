@@ -431,7 +431,7 @@ function showTerms(){
 CollabUp is an application that deals with giving the people another means of Collaboration. The word CollabUp was derived from the words Collaboration and Upload. As we all know, collaboration is the action of doing something within a group of individuals, regardless of their gender, work, age, or any other attribute. As for Upload, it is an action of placing files into the web so that a person can share their works. And just like Uploading, CollabUp strives to reach its goal of helping improve collaboration between people of the same interests.
 CollabUp was developed by a team of developers called “Coalesce”. Coalesce means to “come together to create a mass or whole”.This describes how passionate we are on providing people with the collaboration they might need. It is as if we are to put something of ourselves into what we do, and what we do is to help people by giving them another way for humans to show collaboration.
  </p>
-      <a class="ui large button">Read More</a>
+      <a class="ui large button" href="{{url('about')}}">Read More</a>
       
     </div>
   </div>
