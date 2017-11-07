@@ -32,6 +32,7 @@
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/photos',
         'https://www.googleapis.com/auth/drive.file'
+
    //      'https://www.googleapis.com/auth/youtube' 
      ];
       var authApiLoaded = false;
@@ -91,7 +92,7 @@
         }
         var json = JSON.parse(doc);
         document.getElementById('result_upload').value = doc;
-        
+        console.log(doc);
         document.getElementById('result').innerHTML = 'You Picked: '+json['name'];
       }
     </script>
