@@ -23,7 +23,9 @@ $isMember =false;
 $requestSent = false;
 foreach($members as $member){
  if($member->user_id == Auth::user()->id){
-$isMember = true;
+
+    $isMember = true;
+
 }else
 {
 $isMember = false;
@@ -78,7 +80,6 @@ Members
 
 @if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
-
 Requests
 </a>
 @elseif(!$isMember)
@@ -89,6 +90,7 @@ Requests
 <a class="ui violet button" href="{{route('request',$group->id)}}">Join Group</a>
 @endif
 @else
+
 @endif
 </div>
 		 </div>
