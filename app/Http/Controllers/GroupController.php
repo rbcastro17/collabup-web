@@ -201,9 +201,9 @@ public function savelink(Request $request, $id){
     $data->ref = $ref; 
     $data->save();
     
-    $folder = Folder::where('id', '=', $id)->first();
-    $members = Member::where('group_id', '=', $folder)->get();
-    
+    $c['folder'] = Folder::where('id', '=', $id)->first();
+    $c['members'] = Member::where('group_id', '=', $folder)->get();
+    dd($c);  
     foreach($members as $m){
         AppNotification::create(Auth::user()->id, $m->user_id,$ref,$m->group_id, $ref);
         event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
