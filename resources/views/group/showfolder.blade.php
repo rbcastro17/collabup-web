@@ -87,26 +87,35 @@
       // A simple callback implementation.
       function pickerCallback(data) {
         var url = 'nothing';
+        var role = "reader";
+        var type = "anyone";
+        
         if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
           var doc = JSON.stringify(data[google.picker.Response.DOCUMENTS][0], null, "  ");
         }
         var json = JSON.parse(doc);
         document.getElementById('result_upload').value = doc;
+        var fileid = json['id'];
+        
+        var request1 = gapi.client.request({
+          'path': '/drive/v3/files/' + fileid + '/permissions',
+          'method': 'POST',
+          'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + oauthToken
+          },
+          'body':{
+            'role': role,
+            'type': type
+          }
+        });
+
+        request1.execute(function(resp) {
+          console.log(resp);
+        });
         console.log(doc);
-        var request = gapi.client.request({
-   'path': '/drive/v3/files/' + json['id'] + '/permissions',
-   'method': 'POST',
-   'headers': {
-       'Content-Type': 'application/json'             
-   },
-   'body':{
-        'role': 'reader', // owner, writer, commenter
-        'type': 'anyone'
-   }
-});
-  request.execute(function(resp){
-    console.log(resp);
-  });
+
+
         document.getElementById('result').innerHTML = 'You Picked: '+json['name'];
       }
     </script>
