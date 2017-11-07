@@ -1,3 +1,4 @@
+
 @extends('master')
 
  @section('title')
@@ -20,7 +21,9 @@ var database = firebase.database();
                 <?php
                 $group_roomid= $group->id."-".$group->group_name. "-".$group->code; 
                 ?>
-    database.ref().child("1-Rafael's Group-LUqis").on('value', function(snapshot){
+
+
+    database.ref().child("{{$group_roomid}}").on('value', function(snapshot){
         if(snapshot.exists()){
             var content = '';
        
@@ -44,7 +47,7 @@ var database = firebase.database();
 function sendMessage(){
 
     var rootref = firebase.database().ref();
-    var childref = rootref.child("1-Rafael's Group-LUqis");
+    var childref = rootref.child({{$group_roomid}});
     var storeref = childref.push();
 
     storeref.set([
@@ -57,6 +60,9 @@ function sendMessage(){
 @section('content')
 <h3>Chat Room: {{$group->name}}</h3>
 
+@if($group->hasChat == "no")
+<a href="">Activate Chat FIrst</a>
+@endif
 <div class="ui list" id="messagefeed">
 
                         

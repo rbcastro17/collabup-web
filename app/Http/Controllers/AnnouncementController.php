@@ -30,9 +30,7 @@ class AnnouncementController extends Controller
 	$data['ann'] = DB::table('announcement')->get();
       //dd($data);
         return view('admin.announcement',$data);
-		
-		
-        
+		        
     }
 
     /**

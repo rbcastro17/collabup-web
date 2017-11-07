@@ -398,7 +398,13 @@ $decoded_json = json_decode($json,true);
     }
 
     public function group_chat(Request $request){
+
         $data['group'] = Group::where('code', '=', $request->code)->first(); 
+
         return view('chat.chat',$data);        
+    }
+
+    public function activatechat(){
+        echo
     }
 }
