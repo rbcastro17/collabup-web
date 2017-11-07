@@ -47,7 +47,7 @@
          $groups = App\Member::where("user_id", '=' , Auth::user()->id)->get();
               ?>
      @foreach($groups as $g)
-            <a  class="item" href="{{url('group/'.$g->id)}}" data-tooltip="{{ $g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i>{{$g->group->group_name}}</font></a>
+            <a  class="item" href="{{url('group/'.$g->group_id)}}" data-tooltip="{{ $g->description}}"><font color="#03a9f4">&nbsp;&nbsp; &nbsp;<i class="star icon"></i>{{$g->group->group_name}}</font></a>
      @endforeach        
                    
             </div>
