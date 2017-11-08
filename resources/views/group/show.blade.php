@@ -68,14 +68,14 @@ Members
 Requests
 </a>
 
+@endif
+
 @if($requestSent)
 <a class="ui violet button" disabled>Request Sent</a>
 @else
 <a class="ui violet button" href="{{route('request',$group->id)}}">Join Group</a>
 @endif
 
-
-@endif
 </div>
 		 </div>
 @if($folders->count() == 0)
