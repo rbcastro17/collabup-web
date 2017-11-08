@@ -70,7 +70,8 @@ class GroupController extends Controller
 
         $member_check = Member::where('user_id', '=', Auth::user()->id)->first();
         $isAllowed = false;
-        if($group->group_owner == Auth::user()->id  || $member_check->count() > 0){
+        
+        if($group->group_owner == Auth::user()->id  && $member_check->count() > 0){
             $isAllowed = true;
         }
         return view('group.show', [
