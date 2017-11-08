@@ -23,9 +23,9 @@ $requestSent = false;
 $enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
 if(Auth::user()->role ==1 ){
 $isMember = App\Member::where('user_id', '=', Auth::user()->id)->first();
-$okay ;
+$okay = false;
 
-if($isMember->count() > 10 ){
+if($isMember->count() > 0 ){
 $okay = true;
 }
 foreach($requests as $request){
