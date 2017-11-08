@@ -31,7 +31,7 @@ foreach($requests as $request){
     <div class="thirteen wide column">
         <div class="ui container">
             <div class="wrapper">
-<?php if($isAllowed || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
+<?php if($isAllowed == true || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
                 <form action="{{route('post.create',$group->id)}}" method="POST" class="ui large form">
                 <div class="ui segment">
                 {{csrf_field()}}
