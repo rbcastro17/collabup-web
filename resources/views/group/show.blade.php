@@ -21,10 +21,11 @@ jQuery(document).ready(function($) {
 $requestSent = false;
 
 $enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
+if(Auth::user()->role ==1 ){
 $isMember = App\Member::where('user_id', '=', Auth::user()->id)->first();
 $okay ;
 
-if($isMember->count() > 0 ){
+if($isMember->count() > 10 ){
 $okay = true;
 }
 foreach($requests as $request){
@@ -32,7 +33,7 @@ foreach($requests as $request){
         $requestSent = true;
     }
 }
-
+}
 ?>
 
 <div class="ui two column grid container stackable">
