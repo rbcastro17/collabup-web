@@ -67,14 +67,13 @@ Members
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
 Requests
 </a>
-@elseif(!$isAllowed)
 
 @if($requestSent)
 <a class="ui violet button" disabled>Request Sent</a>
 @else
 <a class="ui violet button" href="{{route('request',$group->id)}}">Join Group</a>
 @endif
-@else
+
 
 @endif
 </div>
