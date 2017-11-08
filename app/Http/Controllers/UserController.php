@@ -203,7 +203,7 @@ return view('auth.resetout',$data);
 	GroupRequest::create([
 		'user_id' => Auth::user()->id,
 		'group_id' => $group_id, 
-		'email' => 
+		 
 	]);
 
 	return redirect()->back();
