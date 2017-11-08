@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
 @section('content')
 
 <?php
+$okay = false;
 $requestSent = false;
 
 $enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
