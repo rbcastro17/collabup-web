@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 $requestSent = false;
 
 foreach($requests as $request){
-    if($request->user_id = Auth::user()->id){
+    if($request->user_id = Auth::user()->id && $request->group_id == $group->group_id ){
         $requestSent = true;
     }
 }
