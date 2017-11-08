@@ -17,8 +17,10 @@ jQuery(document).ready(function($) {
 <?php
 $requestSent = false;
 
+$enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
+
 foreach($requests as $request){
-    if($request->user_id = Auth::user()->id && $request->group_id == $group->group_id ){
+    if($request->user_id = Auth::user()->id && $request->group_id == $group->id ){
         $requestSent = true;
     }
 }

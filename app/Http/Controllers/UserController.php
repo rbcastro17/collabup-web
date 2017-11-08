@@ -202,7 +202,8 @@ return view('auth.resetout',$data);
    public function requestJoinGroup($group_id){
 	GroupRequest::create([
 		'user_id' => Auth::user()->id,
-		'group_id' => $group_id
+		'group_id' => $group_id, 
+		'email' => 
 	]);
 
 	return redirect()->back();
