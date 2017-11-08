@@ -4,10 +4,13 @@
 {{$group->group_name}}
 @endsection
 <script>
+
 jQuery(document).ready(function($) {
+    
     $(".clickable-row").click(function() {
         window.document.location = $(this).data("href");
     });
+
 });
 </script>	
 
@@ -18,7 +21,12 @@ jQuery(document).ready(function($) {
 $requestSent = false;
 
 $enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
+$isMember = App\Member::where('user_id', '=', Auth::user()->id)->first();
+$okay ;
 
+if($isMember->count() > 0 ){
+$okay = true;
+}
 foreach($requests as $request){
     if($request->user_id = Auth::user()->id && $request->group_id == $group->id ){
         $requestSent = true;
@@ -31,7 +39,7 @@ foreach($requests as $request){
     <div class="thirteen wide column">
         <div class="ui container">
             <div class="wrapper">
-<?php if($isAllowed == true || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
+<?php if($okay == true || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
                 <form action="{{route('post.create',$group->id)}}" method="POST" class="ui large form">
                 <div class="ui segment">
                 {{csrf_field()}}
