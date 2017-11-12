@@ -225,23 +225,24 @@ public function memberrequests($id){
     return view('group.pendingrequest',$data);
 }
 
-public function acceptrequest($id,$group_id, $group_request){
-
-    $user = User::where('id', $id)->first();
-    $email = $user->email;
+public function acceptrequest($request){
+        $group_request = GroupRequest::where('ref', '=', $request)->first();
+   // dd($group_request);
+        $user = User::where('id','=', $group_request->user_id)->first();
+    
+        $email = $user->email;
     
     Member::create([
         "user_id" => $user->id,
         "email" =>$email,
-        "group_id" => $group_id,
+        "group_id" => $group_request->group->id,
     ]);
 
-    $group_request = GroupRequest::where('id', $group_request)->first();
     event(new SendAppNotification(Auth::user()->id, $user->id, $group_request->ref, $group_request->group_id,6)); 
     
     AppNotification::create([
         'user_id' => Auth::user()->id,
-        'reciever_id' => $group_request->group->group_owner,
+        'reciever_id' => $user->id,
         'ref' => $group_request->ref,
         'group_id' => $group_request->group_id,
         'type' => 6
