@@ -17,31 +17,57 @@ jQuery(document).ready(function($) {
 <script src="{{asset('js/jquery.min.js')}}"></script>
 @section('content')
 
-<?php
-$okay = false;
-$requestSent = false;
+@php
+$authorized;
+$isOwner;
 
-$enableRequest = App\GroupRequest::where([['user_id', '=', Auth::user()->id],['group_id', '=', $group->id] ])->get();
-if(Auth::user()->role ==1 ){
-$isMember = App\Member::where('user_id', '=', Auth::user()->id)->first();
-$okay = false;
+    if(Auth::user()->role == 1 ){
+$check = App\Member::where([['user_id', '=', Auth::user()->id], ['group_id', '=', $group->id] ])->first();
 
-if($isMember->count() > 0 ){
-$okay = true;
-}
-foreach($requests as $request){
-    if($request->user_id = Auth::user()->id && $request->group_id == $group->id ){
-        $requestSent = true;
+if($check->count() == 0 ){
+    $authorized = false;
+    $isOwner = false;
+} elseif($check->count() > 0 ){
+    $authorized = true;
+    $isOwner = false;
+}else{
+    redirect()->back();
+} 
+}   elseif(Auth::user()->role == 2 && $group->group_owner == Auth::user()->id){
+    $isOwner = true;
+    $authorized = true;
+} elseif(Auth::user()->role == 2 &&  $group->group_owner != Auth::user()->id){
+    $chkIfHBNO = App\Member::where([['user_id', '=', Auth::user()->id],['group_id', '=',$group->id]] )->first();
+    if($chkIfHBNO->count() == 1 ){
+        $authorized = true;
+        $isOwner = false;
+    }else{
+        $authorized = false;
+        $isOwner = false;
     }
+}else{
+    $authorized = false;
+    $isOwner = false;
 }
+
+
+$requestSent;
+$requestCount = App\GroupRequest::where([['user_id', '=', Auth::user()->id], ['group_id', '=', $group->id]])->first();
+if(count($requestCount) != 0){
+$requestSent = true;
+}else{
+$requestSent = false;    
 }
-?>
+
+
+
+@endphp
 
 <div class="ui two column grid container stackable">
     <div class="thirteen wide column">
         <div class="ui container">
             <div class="wrapper">
-<?php if($okay == true || Auth::user()->role==2 && Auth::user()->id == $group->group_owner):?>
+@if($authorized == true)
                 <form action="{{route('post.create',$group->id)}}" method="POST" class="ui large form">
                 <div class="ui segment">
                 {{csrf_field()}}
@@ -56,7 +82,7 @@ foreach($requests as $request){
                     </div>
                 </div>
                 </form>
-<?php endif;?>                
+@endif   
            </div>
         </div>
 		 <div class="ui container">
@@ -64,7 +90,7 @@ foreach($requests as $request){
 @if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
 <a href="{{url('createFolderPage',$group->id)}}" class="ui right labeled icon button"><i class="user icon"></i>Create Folder</a>
 @endif
-@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner|| $isAllowed)
+@if($isOwner || $authorized)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Member Requests</a>
 <a href="{{route('invite', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>Invite Users</a>
 
@@ -75,19 +101,22 @@ foreach($requests as $request){
 Members
 </a>
 
-@if(Auth::user()->role == 2 && Auth::user()->id == $group->group_owner)
+@if($isOwner)
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
 Requests
 </a>
 
 @endif
 
+@if(Auth::user()->id != $group->group_owner && !$authorized)
 @if($requestSent)
 <a class="ui violet button" disabled>Request Sent</a>
 @else
 <a class="ui violet button" href="{{route('request',$group->id)}}">Join Group</a>
 @endif
-
+@elseif($authorized && Auth::user()->id != $group->group_owner)
+<a href="#" class="ui yellow button">Leave Group</a>
+@endif
 </div>
 		 </div>
 @if($folders->count() == 0)
@@ -175,7 +204,7 @@ Hey
                 @endif
             <br>
 
-            <?php if($isAllowed || Auth::user()->role == 2):?>
+            <?php if($authorized):?>
             <form action="{{route('comment',['id'=> $group->id, 'post'=>$post->id])}}" method="POST" class="ui form">
                 <div class="field{{$errors->has('body')? ' error' : ''}}">
                     <textarea name="body" id="body" cols="30" rows="3" class="form-control" placeholder="Comment something here..."

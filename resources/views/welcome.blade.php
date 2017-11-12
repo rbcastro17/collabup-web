@@ -368,7 +368,7 @@ function showTerms(){
     </div>
 	</div>
   <center>
- Registering you are agreeing in&nbsp; <button class="ui violet button" onClick="showTerms()">Terms and Condition </button>
+ Registering you are agreeing in&nbsp; <div class="ui violet button" onClick="showTerms()">Terms and Condition </div>
    </center>
 <h4 class="ui horizontal divider header">
   <i class="circle notched icon"></i>

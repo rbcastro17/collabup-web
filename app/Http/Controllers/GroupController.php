@@ -68,17 +68,9 @@ class GroupController extends Controller
         $folders = Folder::where('group_id', $id)->get();
         $requests = GroupRequest::where('group_id', $id)->get();
 
-        $member_check = Member::where('user_id', '=', Auth::user()->id)->first();
-        $isAllowed = false;
-        
-        if($group->group_owner == Auth::user()->id ){
-       
-            $isAllowed = true;
-       
-        }
 
         return view('group.show', [
-            'isAllowed' => $isAllowed,
+
             'requests' => $requests,
             'group'=>$group,'members'=>$members,'posts'=>$posts, 'comments' => $comments, 'folders' => $folders, 'group_id' => $id]);
     }

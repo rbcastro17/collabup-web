@@ -9,7 +9,7 @@
           <div class="ui grid">
             <div class="row">
               <h1 class="ui huge header">
-                Dashboard
+              &nbsp; &nbsp; &nbsp;  Dashboard
               </h1>
             </div>
             <div class="ui divider"></div>
@@ -33,7 +33,7 @@
                 	Manage Your Groups
 								  </a>
                 	@else
-							   <a class="ui large blue label" data-tooltip="Visit groups that you joined">	
+							   <a class="ui large blue label" data-tooltip="Visit groups that you joined" href="{{url('groups')}}">	
                 	Visit Your Groups
 							  </a>	
                 	@endif  
@@ -67,7 +67,7 @@
             <div class="ui hidden section divider"></div>
             <div class="row">
               <h1 class="ui huge header">
-                Upcoming Events
+              &nbsp; &nbsp; &nbsp;   Upcoming Events
               </h1>
             </div>
             <div class="ui divider"></div>
