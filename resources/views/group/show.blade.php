@@ -24,7 +24,7 @@ $isOwner;
     if(Auth::user()->role == 1 ){
 $check = App\Member::where([['user_id', '=', Auth::user()->id], ['group_id', '=', $group->id] ])->first();
 
-if($check->count() == 0 ){
+if(count($check) == 0 ){
     $authorized = false;
     $isOwner = false;
 } elseif($check->count() > 0 ){
@@ -101,18 +101,23 @@ $requestSent = false;
 Members
 </a>
 
+
 @if($isOwner)
+@php
+$requests = App\GroupRequest::where('group_id', '=', $group->id)->get();
+@endphp
 <a href="{{route('requests', $group->id)}}" class="ui right labeled icon button"><i class="users icon"></i>
 Requests
+<span id="notif-count" class="badge">{{$requests->count()}}</a>
 </a>
 
 @endif
 
 @if(Auth::user()->id != $group->group_owner && !$authorized)
 @if($requestSent)
-<a class="ui violet button" disabled>Request Sent</a>
+<a class="ui yellow button" href="{{route('request.cancel', $group->id)}}">Cancel Request</a>
 @else
-<a class="ui violet button" href="{{route('request',$group->id)}}">Join Group</a>
+<a class="ui violet button" href="{{url('request/'.$group->id)}}">Join Group</a>
 @endif
 @elseif($authorized && Auth::user()->id != $group->group_owner)
 <a href="#" class="ui yellow button">Leave Group</a>

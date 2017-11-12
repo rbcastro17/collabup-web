@@ -36,6 +36,11 @@ use App\Event;
 
 use App\Files;
 
+use App\Group;
+
+use App\Events\SendAppNotification;
+
+
 
 class UserController extends Controller
 {
@@ -103,7 +108,6 @@ class UserController extends Controller
 				'username' => 'min:2',
 				
 			]);
-
 		$this->validate($request, ['image' => 'required|image',]);
 		$image = $request->file('image');
 		$image->move('images/',$image->getClientOriginalName());
@@ -200,13 +204,32 @@ return view('auth.resetout',$data);
 
 
    public function requestJoinGroup($group_id){
+	
+	//dd($group_id);
+	$ref = str_random(50);
+
+	$group = Group::where('id', '=', $group_id)->first();
 	GroupRequest::create([
 		'user_id' => Auth::user()->id,
-		'group_id' => $group_id, 
-		 
+		'group_id' => $group->id, 
+		'ref' => $ref
 	]);
+	
+		event(new SendAppNotification(Auth::user()->id, $group->group_owner, $ref, $group->group_owner,5));
 
+		AppNotification::create([
+			"user_id" => Auth::user()->id,
+			"reciever_id" => $group->group_owner,
+			"ref" => $ref,
+			"group_id" => $group->group_owner,
+			"type" => 5
+		]);
 	return redirect()->back();
+   }
+
+   public function cancelrequest($group_id){
+		GroupRequest::where('group_id', '=', $group_id)->delete();
+		return redirect()->back();
    }
 
 
@@ -261,4 +284,15 @@ return view('auth.resetout',$data);
 						$data['file'] = Files::where('ref', '=', $request->ref)->first();
 						return view('notification.file', $data);
 					}
+
+					public function readacceptnotification(Request $request){
+						AppNotification::where('ref', '=', $request->ref)->update(['unread' => false]);
+						return redirect('group/'.$request->group_id);	
+					}
+
+		public function readAllNotification(){
+			//dd('Hello');
+			AppNotification::where([['reciever_id', '=', Auth::user()->id],['unread', '=', true]])->update(['unread'=> false]);
+		return	redirect()->back();
+		}
 		}

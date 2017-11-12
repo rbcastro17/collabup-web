@@ -206,9 +206,9 @@ public function savelink(Request $request, $id){
             "reciever_id"=> $m->user_id,
              "ref"=> $ref,
              "group_id" =>$m->group_id,
-             "type" => 5
+             "type" => 4
         ]);
-        event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,5));
+        event(new SendAppNotification(Auth::user()->id, $m->user_id, $ref, $m->group_id,4));
     }
 	return redirect()->route('folder.specific', $id);
 }
@@ -236,13 +236,37 @@ public function acceptrequest($id,$group_id, $group_request){
         "group_id" => $group_id,
     ]);
 
-    GroupRequest::where('id', $group_request)->delete();
+    $group_request = GroupRequest::where('id', $group_request)->first();
+    event(new SendAppNotification(Auth::user()->id, $user->id, $group_request->ref, $group_request->group_id,6)); 
+    
+    AppNotification::create([
+        'user_id' => Auth::user()->id,
+        'reciever_id' => $group_request->group->group_owner,
+        'ref' => $group_request->ref,
+        'group_id' => $group_request->group_id,
+        'type' => 6
+    ]);
+   
+    AppNotification::where([['type', '=', 5], ['ref', '=', $group_request->ref]])->delete();
+    $group_request->delete();    
+
     return redirect()->back();
+
 }
 
 public function deleterequest($id){
 
-    GroupRequest::where("id", $id)->delete();
+    $group_request = GroupRequest::where('id', '=', $id)->first();
+
+    event(new SendAppNotification(Auth::user()->id, $user->id, $group_request->ref, $group_request->group_id,7)); 
+    
+    AppNotification::create([
+        'user_id' => Auth::user()->id,
+        'reciever_id' => $group_request->group->group_owner,
+        'ref' => $group_request->ref,
+        'group_id' => $group_request->group_id,
+        'type' => 7
+    ]);
     return redirect()->back();
 }
 public function deletefolder($id){

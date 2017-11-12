@@ -18,7 +18,7 @@ class SendAppNotification implements ShouldBroadcast
     public $ref;
     public $group_id;
     public $type;
-//Type if type = 1 - Post 2 - Event. 3 - Announcement.  
+//Type if type = 1 - Post 2 - Event. 3 - File Upload - 4 Announcement. 5 - Group Request 6 - Accepted Request 7 - Declined Request 
     /**
      * Create a new event instance.
      *

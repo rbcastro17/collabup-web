@@ -158,6 +158,8 @@ Route::get('result', 'GroupController@showsearchresult');
 
 Route::get('request/{group_id}', 'UserController@requestJoinGroup')->name('request');
 
+Route::get('request/{group_id}/cancel', 'UserController@cancelrequest')->name('request.cancel');
+
 Route::get('requests/{id}', 'GroupController@memberrequests')->name('requests');
 
 Route::post('message', function(Request $request) {
@@ -299,7 +301,7 @@ Route::put('dashboard/{id}/upload', 'UserController@upload_picture')->name('acco
 
 Route::get('confirm/test', 'UserController@test_send');
 
-Route::get('group/{id}/{group_id}/{group_request}/accept','GroupController@acceptrequest')->name('group.accept');
+Route::get('group/{group_request}/accept','GroupController@acceptrequest')->name('group.accept');
 
 Route::get('group/{group_request}/delete','GroupController@deleterequest')->name('group.decline');
 
@@ -384,3 +386,7 @@ Route::post('delete/admin/user', 'AdminController@deleteadmin')->name('delete.ad
 Route::get('about', function(){
     return view('about');
 });
+
+Route::post('read');
+
+Route::post('readallnotification', 'UserController@readAllNotification');

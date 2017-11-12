@@ -15,8 +15,7 @@ Group Request
       <img class="right floated mini ui image" src="{{asset('images/avatar.jpg')}}">
       <div class="header">
         {{$request->user->first_name." ". $request->user->last_name}}
-      </div>
-      
+      </div>      
       <div class="meta">
         {{$request->created_at->diffForHumans()}}
       </div>
@@ -26,11 +25,8 @@ Group Request
     </div>
     <div class="extra content">
       <div class="ui two buttons">
-    <?php 
-    $id =$request->user->id;
-    ?>
-        <a class="ui basic green button" href='{{url("group/$id/$group_id/$request->id/accept")}}'>Approve</a>
-        <a class="ui basic red button" href='{{url("group/$request->id/delete")}}'>Decline</a>
+        <a class="ui basic green button" href='{{url("group/$request->ref/accept")}}'>Approve</a>
+        <a class="ui basic red button" href='{{url("group/$request->ref/delete")}}'>Decline</a>
       </div>
     </div>
   </div>
