@@ -544,7 +544,7 @@ public function fetchpost(Request $request){
 		
 			$group->user_id = $user_id;
 			$group->role = $role;
-			$post->save();
+			$group->save();
 			echo "success";
 		}
 	}
