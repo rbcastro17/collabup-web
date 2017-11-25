@@ -101,34 +101,49 @@
 @endsection
 
 @section('content')
+<br>
+<br>
+<div class="ui massive breadcrumb">
+@php 
+$position = 
+
+@endphp
+<a>Sample 1</a>
+<span class="divider"> / </span>
+<a>Sample 2</a>
+
+
+<a data-tooltip="Add A Folder"> -  <i class="add circle icon" ></i></a>
+</div>
+
 <table id="views">
       <tr>
-      <center>
         <td><a class="ui blue button" href="#DOCS_UPLOAD" id="DOCS_UPLOAD"</a>Upload documents to Google Drive.</a></td>
-      </center>
-      
-    </table>
-
-    <pre id="result"></pre>
-
+    <td>
     <form action ="{{route('upload.file', $folders->id)}}" method="POST">
       {{csrf_field()}}      
       <input type ="hidden" name="result_upload" id="result_upload" value=""/>
       <button type="submit" class = "fluid ui green button">Save</button>
     </form>
-
-    <center><h3>Or...</h3></center>
-<br>
-<?php 
+    </td>
+    <td><pre id="result"></pre></td>
+    <td><h4>Or</h4></td>
+  <td>
+    <?php 
 session_start();
 $_SESSION['folder_id'] = $folders->id;
 ?>
-<a href="{{route('onedrive.page')}}" class="fluid ui blue button" > Upload to OneDrive</a>
+<a href="{{route('onedrive.page')}}" class="fluid ui blue button" > Upload to OneDrive</a>    
+</td>
+    
+      </tr>
+    </table>
 
 
-<h3>Files</h3>
+
+<h3>&nbsp;&nbsp;&nbsp;Files</h3>
 @if($files->count() == 0)
-<h2>No Files Yet </h2>
+<h2>&nbsp;&nbsp;&nbsp;No Files Yet </h2>
 @else
 
 <div class="ui inverted segment">
@@ -140,7 +155,7 @@ $_SESSION['folder_id'] = $folders->id;
     -->  
   <div class="content">
   <img src="{{$file->icon}}">    
-  <a class="header" href="{{$file->view_link}}" target="_blank">{{$file->file_name}}</a>
+  <a class="header" href="{{$file ->view_link}}" target="_blank">{{$file->file_name}}</a>
       <div class="description">{{$file->created_at->diffForHumans()}} by <a>{{"@".$file->user->username}}</a></div>
      <br>
       <a class="ui green button" href="{{$file->download_link}}" download> Download </a>
@@ -188,5 +203,9 @@ $_SESSION['folder_id'] = $folders->id;
         }
       });
 </script>
+
+<body>
+
+
 
 @endsection

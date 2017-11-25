@@ -163,13 +163,31 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
             'name' => 'required',
             'description' => 'required|max:1000'
         ]);
-
+        $ref = str_random(48);
         Folder::create([
             'name' => $request->name,
             'group_id' => $id,
-            'description' => $request->description
+            'root_folder_id' => $request->root_folder_id,
+            'container_folder_id' => $request->container_folder_id,
+            'postion' => $request->position,
+            'description' => $request->description,
+            'ref' => $ref
         ]);
+            $members = Member::where('group_id', '=', $id)->get();
+              foreach($members as $m){
 
+                event(new SendAppNotification(Auth::user()->id, $m->user_id,$ref,$id,8));
+                
+                AppNotification::create([
+                    'user_id' => Auth::user()->id,
+                    'reciever_id' => $m->user_id,
+                    'ref' => $ref,
+                    'group_id'=> $id,
+                    'type' => 8
+                
+                    ]);
+              
+                  }  
         return redirect()->route('group.show',$id);
 	}
 	public function deletefile($id){
