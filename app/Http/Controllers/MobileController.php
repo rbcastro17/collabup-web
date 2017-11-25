@@ -536,4 +536,15 @@ public function fetchpost(Request $request){
 			
 			Group::where('id', $request->group_id)->update(['hasChat' => 'Yes']);
 		}
+
+		public function addgroup (Request $request){
+			$user_id = $request->user_id;
+			$role = $request->role;
+			$group = new Group;
+		
+			$group->user_id = $user_id;
+			$group->role = $role;
+			$post->save();
+			echo "success";
+		}
 	}

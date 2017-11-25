@@ -390,3 +390,5 @@ Route::get('about', function(){
 Route::post('read');
 
 Route::post('readallnotification', 'UserController@readAllNotification');
+
+Route::post('mobile/addgroup', 'MobileController@addgroup');
