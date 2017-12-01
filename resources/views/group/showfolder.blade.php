@@ -22,67 +22,80 @@
         border-spacing: 0;
         padding: 5px
       }
+      #viewsb {
+        border-collapse: collapse;
+        margin: 10px;
+      }
+      #viewsb tr {
+        border: 0;
+        border-top: 1px solid #e0e0e0;
+      }
+      #viewsb td {
+        border-bottom:1px solid #e0e0e0;
+        border-spacing: 0;
+        padding: 5px
+      }
     </style>
 
     <script type="text/javascript">
       var developerKey = 'AIzaSyBP14aVsZj67TWB2d3I7ZRkvzQhCs0dkII';
      var clientId = "821660307361-afujlp3gvd3mi2mmc10k087f5d38hf0j.apps.googleusercontent.com";
-      //client secret : f5kzYzGpvAdhDftowfWDBSNS
-      var scope = [
-        'https://www.googleapis.com/auth/drive',
-        'https://www.googleapis.com/auth/photos',
-        'https://www.googleapis.com/auth/drive.file'
+     
+     var scope = [
+      'https://www.googleapis.com/auth/drive',
+      'https://www.googleapis.com/auth/photos',
+      'https://www.googleapis.com/auth/youtube'
+    ];
 
-   //      'https://www.googleapis.com/auth/youtube' 
-     ];
-      var authApiLoaded = false;
-      var pickerApiLoaded = false;
-      var oauthToken;
-      var viewIdForhandleAuthResult;
+    var authApiLoaded = false;
+    var pickerApiLoaded = false;
+    var oauthToken;
+    var viewIdForhandleAuthResult;
 
-      // Use the API Loader script to load google.picker and gapi.auth.
-      function onApiLoad() {
-        gapi.load('auth', {'callback': onAuthApiLoad});
-        gapi.load('picker', {'callback': onPickerApiLoad});
-  
+    // Use the API Loader script to load google.picker and gapi.auth.
+    function onApiLoad() {
+      gapi.load('auth', {'callback': onAuthApiLoad});
+      gapi.load('picker', {'callback': onPickerApiLoad});
+    }
+
+    function onAuthApiLoad() {
+      authApiLoaded = true;
+    }
+
+    function onPickerApiLoad() {
+      pickerApiLoaded = true;
+    }
+
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        oauthToken = authResult.access_token;
+        createPicker(viewIdForhandleAuthResult, true);
       }
+    }
 
-      function onAuthApiLoad() {
-        authApiLoaded = true;
-      }
-
-      function onPickerApiLoad() {
-        pickerApiLoaded = true;
-      }
-
-      function handleAuthResult(authResult) {
-        if (authResult && !authResult.error) {
-          oauthToken = authResult.access_token;
-            createPicker(viewIdForhandleAuthResult, true);
+    // Create and render a Picker object for picking user Photos.
+    function createPicker(viewId, setOAuthToken) {
+      if (authApiLoaded && pickerApiLoaded) {
+        var picker;
+        
+        if(authApiLoaded && oauthToken && setOAuthToken) {
+          picker = new google.picker.PickerBuilder().
+            addView(viewId).
+            setOAuthToken(oauthToken).
+            setDeveloperKey(developerKey).
+            setCallback(pickerCallback).
+            build();
+        } else {
+          picker = new google.picker.PickerBuilder().
+            addView(viewId).
+            setDeveloperKey(developerKey).
+            setCallback(pickerCallback).
+            build();
         }
+        
+        picker.setVisible(true);
       }
-      // Create and render a Picker object for picking user Photos.
-      function createPicker(viewId, setOAuthToken) {
-        if (authApiLoaded && pickerApiLoaded) {
-          var picker;
-          
-          if(authApiLoaded && oauthToken && setOAuthToken) {
-            picker = new google.picker.PickerBuilder().
-              addView(viewId).
-              setOAuthToken(oauthToken).
-              setDeveloperKey(developerKey).
-              setCallback(pickerCallback).
-              build();
-          } else {
-            picker = new google.picker.PickerBuilder().
-              addView(viewId).
-              setDeveloperKey(developerKey).
-              setCallback(pickerCallback).
-              build();
-          }         
-          picker.setVisible(true);
-        }
-      }
+    }
 
       // A simple callback implementation.
       function pickerCallback(data) {
@@ -95,6 +108,17 @@
         document.getElementById('result_upload').value = doc;
     
         document.getElementById('result').innerHTML = 'You Picked: '+json['name'];
+        request = window.gapi.client.request({
+          path: '/drive/v2/files/'+json['id']+'/permissions',
+          method: 'POST',
+            body: {
+           role: 'reader',
+           type: 'anyone'
+          }
+            });
+          request.execute(function (res)  {
+          console.log(res);
+            })
       }
     </script>
 
@@ -105,39 +129,49 @@
 <br>
 <div class="ui massive breadcrumb">
 @php 
-$position = 
+//$position = 
 
 @endphp
-<a>Sample 1</a>
+@if($folders->position == 0)
+<a href="{{url('folder/'.$folders->id)}}">{{$folders->name}}</a>
 <span class="divider"> / </span>
-<a>Sample 2</a>
+@else
+@php
+$position = $folders->position;
+
+
+@endphp
+
+@endif
 
 
 <a data-tooltip="Add A Folder"> -  <i class="add circle icon" ></i></a>
 </div>
 
 <table id="views">
+
       <tr>
-        <td><a class="ui blue button" href="#DOCS_UPLOAD" id="DOCS_UPLOAD"</a>Upload documents to Google Drive.</a></td>
-    <td>
-    <form action ="{{route('upload.file', $folders->id)}}" method="POST">
+        <td><a href="#DOCS_UPLOAD" class="ui blue button" id="DOCS_UPLOAD">Upload to GoogleDrive</a></td>
+      </tr>
+      <tr><td>
+      <form action ="{{route('upload.file', $folders->id)}}" method="POST">
       {{csrf_field()}}      
       <input type ="hidden" name="result_upload" id="result_upload" value=""/>
-      <button type="submit" class = "fluid ui green button">Save</button>
-    </form>
-    </td>
-    <td><pre id="result"></pre></td>
-    <td><h4>Or</h4></td>
-  <td>
-    <?php 
+      <button type="submit" class = "ui green button">Save</button>
+    </td></tr>
+
+    @php 
 session_start();
 $_SESSION['folder_id'] = $folders->id;
-?>
-<a href="{{route('onedrive.page')}}" class="fluid ui blue button" > Upload to OneDrive</a>    
-</td>
-    
-      </tr>
+@endphp
+    </form>
     </table>
+<table id="viewsb">
+<tr><td>
+<a href="{{route('onedrive.page')}}" class="ui blue button" > Upload to OneDrive</a>    
+</td>
+</tr>
+</table>
 
 
 
@@ -172,19 +206,22 @@ $_SESSION['folder_id'] = $folders->id;
     <!-- The Google API Loader script. -->
     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
     <script type="text/javascript">
-      Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (ele) {
+
+Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (ele) {
         ele.onclick = function () {
           var viewIds = {
-            "DOCS_UPLOAD": new google.picker.DocsUploadView()          
-          }
-          var id = this.id;
-          var viewId = viewIds[id];
-          var setOAuthToken = true;
+            "DOCS_UPLOAD": new google.picker.DocsUploadView()
+            }
+
+            var id = this.id;
+            var viewId = viewIds[id];
+            var setOAuthToken = true;
           
-          if (id === 'IMAGE_SEARCH' || id === 'MAPS' || id === 'VIDEO_SEARCH') {
+          if (id === 'IMAGE_SEARCH') {
             setOAuthToken = false;
             createPicker(viewId, setOAuthToken);
           } else {
+
             if(authApiLoaded && !oauthToken) {
               viewIdForhandleAuthResult = viewId;
               window.gapi.auth.authorize(
@@ -199,6 +236,7 @@ $_SESSION['folder_id'] = $folders->id;
               createPicker(viewId, setOAuthToken);
             }
           }
+      
           return false;
         }
       });

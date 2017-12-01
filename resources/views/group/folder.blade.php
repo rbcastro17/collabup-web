@@ -11,6 +11,9 @@ Create Folder
 
 <form action="{{route('do.folder',$group->id)}}" method="post" class="ui form">
     {{csrf_field()}}
+    <input type="hidden" value="0" name="root_folder_id" />
+    <input type="hidden" value="0" name="container_folder_id" />
+    <input type="hidden" value="0" name="position" />
     <div class="field{{$errors->has('name')? ' error' : ''}}">
         <label for="">Folder Name</label>
         <div class="ui left icon input">

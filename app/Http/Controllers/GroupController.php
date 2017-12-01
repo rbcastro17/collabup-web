@@ -169,7 +169,7 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
             'group_id' => $id,
             'root_folder_id' => $request->root_folder_id,
             'container_folder_id' => $request->container_folder_id,
-            'postion' => $request->position,
+            'position' => $request->position,
             'description' => $request->description,
             'ref' => $ref
         ]);

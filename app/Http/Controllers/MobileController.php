@@ -34,6 +34,8 @@ use App\PasswordReset;
 
 use App\Announcement;
 
+use App\Category;
+
 class MobileController extends Controller
 {
 
@@ -540,11 +542,101 @@ public function fetchpost(Request $request){
 		public function addgroup (Request $request){
 			$user_id = $request->user_id;
 			$role = $request->role;
+			$name = $request->name;
+			$description = $request->description;
+
+			$category_name = $request->category;
+			$category = Category::where('name', '=', $category_name)->first();
 			$group = new Group;
 		
-			$group->user_id = $user_id;
-			$group->role = $role;
+			$group->user_owner = $user_id;
+			$group->group_type = $role;
+			$group->description = $description;
+			$group->code = str_random(5);
+			$group->hasChat = "No";
+			$group->category_id = $category->id;
+		
+
+
 			$group->save();
 			echo "success";
+		}
+		public function fetchcategories(){
+			$categories = Category::all();
+			
+			$a = [];
+			foreach($categories as $c){
+				array_push($a,[
+					'category_id' => $c->id,
+					'category_name' => $c->name
+				]);
+			}
+			return ['result' => $a];
+		}
+
+		public function updategroup(Request $request){
+			$group_id = $request->group_id;
+			$description = $request->description;
+			$name = $request->name; 
+			$category_name = $request->type;
+			$privacy = $request->privacy;
+
+			$category = Category::where('name', '=', $category_name)->first();
+			
+			$group = Group::where('id', '=', $group_id)->update([
+				'description' => $description,
+				'group_name' => $name,
+				'group_type' => $privacy,
+				'category_id' => $category->id	
+			]);
+			echo "success";
+		}
+
+		public function deletegroup(Request $request){
+			Group::where('id', '=', $request->group_id)->delete();
+		}
+
+		public function addevent(Request $request){
+			$group_id = $request->group_id;
+			$event_name = $request->title;
+			$event_author = $request->event_author;
+			$event_start = $request->start_duration;
+			$event_end = $request->end_duration;
+			$event_title = $request->title;
+			$event_body = $request->body;
+			$ref = str_random(45);
+			Event::create([
+				'group_id' => $group_id, 
+				'event_author' => $event_author, 
+				'start_duration' => $event_start,
+				 'end_duration' => $event_end, 
+				 'title' => $title, 
+				 'body' =>$body,
+				  'ref'	=>$ref	
+			]);
+			echo "success";	
+		}
+
+		public function editevent(Request $request){
+				$event_id = $request->event_id;
+				$group_id = $request->group_id;
+				$event_start = $request->event_start;
+				$event_end = $request->event_end;
+				$title = $request->title;
+				$body = $request->body;
+
+			$event = Event::where('id', '=', $event_id)->update([
+				'group_id' => $group_id,
+				'start_duration' =>$event_start ,
+			    'end_duration' => $event_end, 
+				'title' => $title,
+				'body' => $body
+			]);
+				echo "success";
+		}
+
+		public function deleteevent(Request $request){
+			Event::where('id', '=', $request->event_id)->delete();	
+		echo "success";
 		}
 	}

@@ -392,3 +392,16 @@ Route::post('read');
 Route::post('readallnotification', 'UserController@readAllNotification');
 
 Route::post('mobile/addgroup', 'MobileController@addgroup');
+
+Route::get('mobile/fetchcategories', 'MobileController@fetchcategories');
+
+Route::post('mobile/updategroup', 'MobileController@updategroup');
+
+Route::post('mobile/deletegroup', 'MobileController@deletegroup');
+
+Route::pot('mobile/addevent', 'MobileController@addevent');
+
+Route::post('mobile/editevent', 'MobileController@editevent');
+
+Route::post('mobile/deleteevent', 'MobileController@deleteevent');
+
