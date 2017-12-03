@@ -639,4 +639,21 @@ public function fetchpost(Request $request){
 			Event::where('id', '=', $request->event_id)->delete();	
 		echo "success";
 		}
+
+		public function fetchevents(Request $request){
+			$group_id = $request->group_id;
+			$events = Event::where('group_id', '=', $group_id)->get();
+			$result = array();
+			foreach($events as $e){
+				array_push($result,[
+					'event_id' => $e->id,
+					'event_author' => $e->user->first_name. " ". $e->user->last_name,
+					'event_start' => $e->start_duration,
+					'event_end' => $e->end_duration,
+					'event_title' => $e->title,
+					'event_body' => $e->body
+				]);
+			}
+			return ['result' => $result];
+		}
 	}

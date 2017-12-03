@@ -13,4 +13,9 @@ class Event extends Model
     public function group(){   
         return $this->belongsTo('App\Group', 'group_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Event', 'event_author');
+    }
 }
