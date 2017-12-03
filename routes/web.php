@@ -399,7 +399,7 @@ Route::post('mobile/updategroup', 'MobileController@updategroup');
 
 Route::post('mobile/deletegroup', 'MobileController@deletegroup');
 
-Route::pot('mobile/addevent', 'MobileController@addevent');
+Route::post('mobile/addevent', 'MobileController@addevent');
 
 Route::post('mobile/editevent', 'MobileController@editevent');
 
