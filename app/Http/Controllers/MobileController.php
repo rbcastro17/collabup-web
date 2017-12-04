@@ -568,7 +568,7 @@ public function fetchpost(Request $request){
 				$category = Category::where('name', '=', $category_name)->first();
 				$group = new Group;
 			
-				$group->user_owner = $user_id;
+				$group->group_owner = $user_id;
 				$group->group_type = $group_type;
 				$group->description = $description;
 				$group->code = str_random(5);
