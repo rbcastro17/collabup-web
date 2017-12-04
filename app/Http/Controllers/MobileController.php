@@ -569,6 +569,7 @@ public function fetchpost(Request $request){
 				$group = new Group;
 			
 				$group->group_owner = $user_id;
+				$group->group_name = $group_name;
 				$group->type = $group_type;
 				$group->description = $description;
 				$group->code = str_random(5);
