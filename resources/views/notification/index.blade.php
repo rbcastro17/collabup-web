@@ -62,8 +62,8 @@ Notifications ({{$notifications->count()}})
       {{$n->user->first_name}} Requested to Join {{$n->group->group_name}}
       <button class="ui button" type="submit">View Request</button>
       </form>
-      <a href="" class="ui blue button">Accept Request</a>
-      <a href="" class="ui yellow button">Decline Request</a>
+      <a href="{{url('group/'.$n->ref.'/accept')}}" class="ui blue button">Accept Request</a>
+      <a href="{{url('group/'.$n->ref.'/delete')}}" class="ui yellow button">Decline Request</a>
       <a href="" class="ui black button">Mark As Read</a>
       @elseif($n->type == 6)
       Your Group Request in {{$n->group->group_name}} has been accepted.

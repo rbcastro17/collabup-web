@@ -245,7 +245,7 @@ public function memberrequests($id){
 
 public function acceptrequest($request){
         $group_request = GroupRequest::where('ref', '=', $request)->first();
-   // dd($group_request);
+
         $user = User::where('id','=', $group_request->user_id)->first();
     
         $email = $user->email;

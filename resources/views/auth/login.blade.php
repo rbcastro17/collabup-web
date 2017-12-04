@@ -16,7 +16,15 @@ Login
     <div class="ui segment">
     <div class="field{{$errors->has('email')? ' error':''}}">
         <label for="">Email</label>
-        <div class="ui left icon input"><input type="email" name="email" id="email" placeholder="Email"><i class="mail icon"></i></div>
+        <div class="ui left icon input"><input type="text" name="email" id="email" placeholder="Email"><i class="mail icon"></i></div>
+        @if($errors->has('email'))
+        <div class="ui negative message">
+  <i class="close icon"></i>
+  <div class="header">
+   <p>{{$errors->first('email')}}</p>
+  </div>
+
+        @endif
     </div>
     <div class="field{{$errors->has('password')? ' error':''}}">
         <label for="">Password</label>

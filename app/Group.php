@@ -8,9 +8,13 @@ class Group extends Model
 {
      protected $fillable = [
          'group_id',
-        'group_name', 'code', 'description',
+        'group_name', 
+        'code',
+         'description',
         'group_type',
-         'group_owner', 'hasChat', 'category_id'
+         'group_owner',
+          'hasChat',
+          'category_id'
     ];
     
     public function user(){

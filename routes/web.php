@@ -103,21 +103,16 @@ Route::post('mobile/addcomment', 'MobileController@addComment');
 
 Route::post('mobile/fetchfiles', 'MobileController@fetchfiles');
 
-
-//Route::get('sendkayate', function(){
-//    Mail::to('everizza@gmail.com')->send(new App\Mail\Confirmation('ate', 'sew32qd', 'mail@mail.com'));
-//echo "sent";
-//});
 Route::get('account/{id}/activate', 'AdminController@activate')->name('account.activate.admin');
+
 Route::get('account/{id}/deactivate', 'AdminController@deactivate')->name('account.deactivate.admin');
+
 Route::get('account/search', 'AdminController@searchspecificuser');
 
 Route::get('/dashboard', function(){
     
 return view('dashboard');
 })->name('dashboard')->middleware('verified');
-
-//Auth
 
 Route::get('/signup', 'AuthController@getRegister')->name('register');
 

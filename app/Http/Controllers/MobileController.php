@@ -540,26 +540,36 @@ public function fetchpost(Request $request){
 		}
 
 		public function addgroup (Request $request){
-			$user_id = $request->user_id;
-			$role = $request->role;
-			$name = $request->name;
-			$description = $request->description;
+			$user_role = $request->role;
+			if($user_role == 'head'){
+			$group_type;		
+			$group_type_name =	$request->group_type;
+				if($group_type_name == 'Open'){
+					$group_type = 1;
+				}elseif($group_type_name == 'Closed'){
+					$group_type = 2;	
+				}else{
+					$group_type = 3;
+				}
 
-			$category_name = $request->category;
-			$category = Category::where('name', '=', $category_name)->first();
-			$group = new Group;
-		
-			$group->user_owner = $user_id;
-			$group->group_type = $role;
-			$group->description = $description;
-			$group->code = str_random(5);
-			$group->hasChat = "No";
-			$group->category_id = $category->id;
-		
+				$user_id = $request->user_id;
+				$name = $request->name;
+				$description = $request->description;
+				$category_name = $request->category_id;
+				$group_name = $request->group_name;
 
-
-			$group->save();
-			echo "success";
+				$category = Category::where('name', '=', $category_name)->first();
+				$group = new Group;
+			
+				$group->user_owner = $user_id;
+				$group->group_type = $group_type;
+				$group->description = $description;
+				$group->code = str_random(5);
+				$group->hasChat = "no";
+				$group->category_id = $category->id;
+				$group->save();
+				echo "success";
+			}
 		}
 		public function fetchcategories(){
 			$categories = Category::all();
