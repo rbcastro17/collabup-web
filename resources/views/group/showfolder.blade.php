@@ -44,7 +44,8 @@
      var scope = [
       'https://www.googleapis.com/auth/drive',
       'https://www.googleapis.com/auth/photos',
-      'https://www.googleapis.com/auth/youtube'
+      'https://www.googleapis.com/auth/youtube',
+
     ];
 
     var authApiLoaded = false;
@@ -217,7 +218,7 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
             var viewId = viewIds[id];
             var setOAuthToken = true;
           
-          if (id === 'IMAGE_SEARCH') {
+          if (id === 'IMAGE_SEARCH' ) {
             setOAuthToken = false;
             createPicker(viewId, setOAuthToken);
           } else {
@@ -242,8 +243,8 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
       });
 </script>
 
-<body>
+<div class="ui modal createfolder">
 
-
+</div>
 
 @endsection
