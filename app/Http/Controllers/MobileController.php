@@ -541,6 +541,13 @@ public function fetchpost(Request $request){
 
 		public function addgroup (Request $request){
 			$user_role = $request->role;
+			echo "group_name: " + $request->group_name;
+			echo "description: "+ $request->description ;
+			echo "group_type: "+ $request->group_type ;
+			echo "category_id: "+$request->category_id;
+			echo "user_id: "+$request->user_id ;
+			echo "role: "+$request->role ;
+		    die();
 			if($user_role == 'head'){
 			$group_type;		
 			$group_type_name =	$request->group_type;
