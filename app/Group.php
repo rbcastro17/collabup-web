@@ -11,7 +11,7 @@ class Group extends Model
         'group_name', 
         'code',
          'description',
-        'group_type',
+        'type',
          'group_owner',
           'hasChat',
           'category_id'
