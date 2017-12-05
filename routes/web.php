@@ -400,5 +400,5 @@ Route::post('mobile/editevent', 'MobileController@editevent');
 
 Route::post('mobile/deleteevent', 'MobileController@deleteevent');
 
-Route::post();
+//Route::post();
 

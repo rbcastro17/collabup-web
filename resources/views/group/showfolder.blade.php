@@ -129,18 +129,20 @@
 <br>
 <br>
 <div class="ui massive breadcrumb">
-@php 
-//$position = 
 
-@endphp
 @if($folders->position == 0)
 <a href="{{url('folder/'.$folders->id)}}">{{$folders->name}}</a>
 <span class="divider"> / </span>
 @else
 @php
-$position = $folders->position;
-
-
+$position = $folders->position + 1;
+$container_folder_id =$folders->id;
+$root_folder_id;
+if($position == 1){
+$root_folder_id = $folders->id;
+}else{
+  $root_folder_id = $folder->root_folder_id;
+}
 @endphp
 
 @endif
@@ -250,7 +252,10 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
 
 <form action="{{}}" method="post">
 {{csrf_field()}}
-<input type="hidden" name="root_folder_id">
+<input type="hidden" name="root_folder_id" value="{{$root_folder_id}}"/>
+<input type="hidden" name="container_folder_id" value="{{$container_folder_id}}"/>
+<input type="hidden" name="position" value="{{$position}}"/>
+<input type = >
 
 </form>
 </div>
