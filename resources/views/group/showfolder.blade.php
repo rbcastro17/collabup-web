@@ -243,8 +243,17 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
       });
 </script>
 
-<div class="ui modal createfolder">
+<div class="ui createfolder modal">
+<div class="header">Create Folder</div>
+<div class="content">
+<p>Create another folder inside a folder</p>
 
+<form action="{{}}" method="post">
+{{csrf_field()}}
+<input type="hidden" name="root_folder_id">
+
+</form>
+</div>
 </div>
 
 @endsection

@@ -47,12 +47,30 @@ class AdminMobileController extends Controller
 		return ["result"=> $response];
 		}
 		public function addannouncement(Request $request){
+
+			$user_id = $request->user_id;
 			Announcement::create([
-				"user_id" => $request->user_id,
+				"user_id" => $user_id,
 				"title" => $request->title,
 				"body" => $request->body,
 				"ref" => str_random(6)
 			]);
+
+			$member = User::all();
+			foreach($member as $m){
+		
+				event(new SendAppNotification($user_id,$m->id, $ref,0,3));
+		
+				AppNotification::create([
+					"user_id" => $user_id,
+					"reciever_id" => $m->id,
+					"ref" => $ref,
+					"group_id" => 0,
+					"type" => 3
+				]);
+		
+			}	
+
 			return "success";
 		}
 		public function activateuser(Request $request){

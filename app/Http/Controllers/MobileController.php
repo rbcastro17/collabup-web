@@ -36,6 +36,10 @@ use App\Announcement;
 
 use App\Category;
 
+use App\Event\SendAppNotification;
+
+use App\AppNotification;
+
 class MobileController extends Controller
 {
 
@@ -312,16 +316,30 @@ $member = Member::where('id', '=', $user->id)->first();
 	$group_id = $request->group_id;
 	$user_id = $request->user_id;
 	$body = $request->body;
-
+	$ref = str_random(7);	
 	$post = new Post;
 	$post->user_id = $user_id;
 	$post->group_id = $group_id;
 	$post->body = $body;
-	$post->ref = str_random(7);
+	$post->ref = $ref;
 	$post->save();
+		$member = Member::where('group_id','=', $group_id)->get();
+	foreach($member as $m){
+
+		event(new SendAppNotification($user_id,$m->user_id, $ref,$group_id,1));
+
+		AppNotification::create([
+			"user_id" => $user_id,
+			"reciever_id" => $m->user_id,
+			"ref" => $ref,
+			"group_id" => $group_id,
+			"type" => 1
+		]);
+
+	}	
+
 
 	echo "success";
-	
 	}	
 	
 	public function viewevents ($id){
@@ -632,6 +650,23 @@ public function fetchpost(Request $request){
 				 'body' =>$body,
 				  'ref'	=>$ref	
 			]);
+
+			$member = Member::where('group_id','=', $group_id)->get();
+			foreach($member as $m){
+		
+				event(new SendAppNotification($user_id,$m->user_id, $ref,$group_id,1));
+		
+				AppNotification::create([
+					"user_id" => $user_id,
+					"reciever_id" => $m->user_id,
+					"ref" => $ref,
+					"group_id" => $group_id,
+					"type" => 2
+				]);
+		
+			}	
+
+
 			echo "success";	
 		}
 
@@ -674,4 +709,34 @@ public function fetchpost(Request $request){
 			}
 			return ['result' => $result];
 		}
+
+		public function requestjoinroup(Request $request){
+			$user_id = $request->user_id;
+			$group_id = $request->group_id;
+			$ref = str_random(45);
+			
+			GroupRequest::create([
+				"user_id" => $user_id,
+				"group_id" => $group_id,
+				"ref" => $ref
+			]);
+			$group = Group::where('id', '=', $group_id)->first();
+			
+			event(new SendAppNotification($user_id, $group->group_owner,$ref,$group_id, 5));
+			AppNotification::create([
+				"user_id" => $user_id,
+				"reciever_id" => $group->group_owner,
+				"ref" => $ref,
+				"group_id" => $group_id,
+				"type" => 5
+			]);	
+				echo "success";
+		}
+
+		public function acceptrequest(Request $request){
+		$ref = $request->ref;	
+		$group_request = GroupRequest::where('ref', '=', $ref)->first();			
+			
+			event(new SendAppNotification());
+	}
 	}
