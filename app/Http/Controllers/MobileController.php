@@ -665,8 +665,6 @@ public function fetchpost(Request $request){
 				]);
 		
 			}	
-
-
 			echo "success";	
 		}
 
@@ -710,6 +708,23 @@ public function fetchpost(Request $request){
 			return ['result' => $result];
 		}
 
+		public function fetchevent(Request $request){
+		$event_id = $request->event_id; 
+		$event = Event::where('id', '=', $event_id)->first();	
+		$result = array();
+
+		array_push($result, [
+			'id' => $event->id,
+			'title' => $event->title,
+			'body' => $event->body,
+			'event_author' => $event->user->first_name." ". $event->user->last_name,
+			'start_duration' => $event->start_duration,
+			'end_duration' => $event->end_duration
+		]);
+
+		return ['result' => $result];
+		}
+
 		public function requestjoinroup(Request $request){
 			$user_id = $request->user_id;
 			$group_id = $request->group_id;
@@ -737,6 +752,6 @@ public function fetchpost(Request $request){
 		$ref = $request->ref;	
 		$group_request = GroupRequest::where('ref', '=', $ref)->first();			
 			
-			event(new SendAppNotification());
+			//event(new SendAppNotification());
 	}
 	}
