@@ -408,6 +408,9 @@ Route::get('mobile/fetchevents', 'MobileController@fetchevents');
 
 Route::post('mobile/requestjoingroup', 'MobileController@requestjoingroup');
 
+Route::get('mobile/fetcheventmember', 'MobileController@fetcheventmember');
+
+Route::get('mobile/fetcheventhead', 'MobileController@fetcheventhead');
 
 //Route::post();
 

@@ -40,6 +40,10 @@ use App\Event\SendAppNotification;
 
 use App\AppNotification;
 
+use Carbon\Carbon;
+
+use App\Event;
+
 class MobileController extends Controller
 {
 
@@ -754,4 +758,50 @@ public function fetchpost(Request $request){
 			
 			//event(new SendAppNotification());
 	}
+
+
+		public function fetcheventmember(Request $request){
+			$user_id = $request->user_id;
+			$members = Member::where('user_id', '=', $user_id)->get();			
+			$result = array();
+			foreach($members as $m){
+				$event = Event::where('group_id', '=', $m->group_id)->get();
+					foreach($event as $e){
+						$start = new Carbon($e->start_duration);
+						$end = new Carbon($e->end_duration);
+						array_push($result,[
+							'event_id' => $e->id,
+							'title' => $e->title,
+							'body' => $e->body,
+							'author' => $e->user->first_name." ". $e->user->last_name,
+							"start" => $start->format('l jS \\of F Y h:i:s A'), 
+							"end" => $end->format('l jS \\of F Y h:i:s A'),
+							"groupname" => $e->group->group_name 
+						]);
+					}				
+			}
+			return ['result' => $result];
+		}
+
+		public function fetcheventhead(Request $request){
+			$user_id = $request->user_id;
+			$events = Event::where('event_author', '=', $user_id)->get();
+			$result = array();
+			foreach($events as $e){
+				$start = new Carbon($e->start_duration);
+				$end = new Carbon($e->end_duration);
+				array_push($result,[
+					'event_id' => $e->id,
+					'title' => $e->title,
+					'body' => $e->body,
+					'author' => $e->user->first_name." ". $e->user->last_name,
+					"start" => $start->format('l jS \\of F Y h:i:s A'), 
+					"end" => $end->format('l jS \\of F Y h:i:s A'),
+					"groupname" => $e->group->group_name 
+				]);
+			}
+
+			return ['result' => $result];
+		}
+
 	}

@@ -203,9 +203,14 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
          if($currpos > 0){
           $other_folder;    
           
-        echo "Current Position: ". $currpos;  
+       // echo "Current Position: ". $currpos;  
           for($i = $currpos; $currpos > 0; $i--){
-            echo $i; 
+          $other = Folder::where([
+              
+          ])->first();
+            array_push($other_folder,[
+                "" => ,
+            ]); 
         }
          die();
 

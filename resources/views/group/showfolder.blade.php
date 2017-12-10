@@ -161,6 +161,7 @@ $root_folder_id = $folders->id;
 }else{
   $root_folder_id = $folder->root_folder_id;
 }
+
 @endphp
 
 @endif
