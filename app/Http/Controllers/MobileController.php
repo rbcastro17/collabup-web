@@ -769,6 +769,15 @@ public function fetchpost(Request $request){
 					foreach($event as $e){
 						$start = new Carbon($e->start_duration);
 						$end = new Carbon($e->end_duration);
+						$now = Carbon::now();
+						$isdone;
+		
+						if($now->gt($end)){
+							$isdone = true;
+						}else{
+							$isdone = false;
+						}
+
 						array_push($result,[
 							'event_id' => $e->id,
 							'title' => $e->title,
@@ -776,7 +785,8 @@ public function fetchpost(Request $request){
 							'author' => $e->user->first_name." ". $e->user->last_name,
 							"start" => $start->format('l jS \\of F Y h:i:s A'), 
 							"end" => $end->format('l jS \\of F Y h:i:s A'),
-							"groupname" => $e->group->group_name 
+							"groupname" => $e->group->group_name,
+							"isdone" => $isdone 
 						]);
 					}				
 			}
@@ -790,6 +800,15 @@ public function fetchpost(Request $request){
 			foreach($events as $e){
 				$start = new Carbon($e->start_duration);
 				$end = new Carbon($e->end_duration);
+				$now = Carbon::now();
+				$isdone;
+
+				if($now->gt($end)){
+					$isdone = true;
+				}else{
+					$isdone = false;
+				}
+
 				array_push($result,[
 					'event_id' => $e->id,
 					'title' => $e->title,
@@ -797,8 +816,9 @@ public function fetchpost(Request $request){
 					'author' => $e->user->first_name." ". $e->user->last_name,
 					"start" => $start->format('l jS \\of F Y h:i:s A'), 
 					"end" => $end->format('l jS \\of F Y h:i:s A'),
-					"groupname" => $e->group->group_name 
-				]);
+					"groupname" => $e->group->group_name, 
+					"isdone" => $isdone
+					]);
 			}
 
 			return ['result' => $result];
