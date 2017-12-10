@@ -126,13 +126,31 @@
 @endsection
 
 @section('content')
-<br>
-<br>
-<div class="ui massive breadcrumb">
+<script>
+ 
+      function opencreatefolder(){
+        $('.ui.createfolder.modal')
+        .modal('show');
+      }
 
+</script>
+<br>
+<br>
+
+
+<div class="ui massive breadcrumb">
 @if($folders->position == 0)
 <a href="{{url('folder/'.$folders->id)}}">{{$folders->name}}</a>
 <span class="divider"> / </span>
+
+@if($folders->position != 0)
+@endif
+
+@php
+$root_folder_id = $folders->id;
+$container_folder_id = $folders->id;
+$position = 1;
+@endphp
 @else
 @php
 $position = $folders->position + 1;
@@ -148,8 +166,12 @@ $root_folder_id = $folders->id;
 @endif
 
 
-<a data-tooltip="Add A Folder"> -  <i class="add circle icon" ></i></a>
+<div data-tooltip="Add A Folder" onclick="opencreatefolder()"> -  <i class="add circle icon" ></i></div>
 </div>
+<br>
+<br>
+<h4>Description: {{$folders->description}}</h4>
+
 
 <table id="views">
 
@@ -246,16 +268,33 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
 </script>
 
 <div class="ui createfolder modal">
-<div class="header">Create Folder</div>
+<div class="header">Create Folder in {{$folders->name}}</div>
 <div class="content">
-<p>Create another folder inside a folder</p>
+<p>Create another folder inside another folder</p>
 
-<form action="{{}}" method="post">
+<form action="{{url('createFolder')}}" method="post" class="ui form">
 {{csrf_field()}}
 <input type="hidden" name="root_folder_id" value="{{$root_folder_id}}"/>
 <input type="hidden" name="container_folder_id" value="{{$container_folder_id}}"/>
 <input type="hidden" name="position" value="{{$position}}"/>
-<input type = >
+
+<div class="field">
+<label>Folder Name</label>
+<div class="ui fluid icon input">
+<input type="text" name="name" placeholder="Folder's Name"/> 
+</div> 
+</div>
+
+
+<div class="field">
+<label>Description</label>
+<div class="ui form input">
+<textarea type="text" name="description" placeholder="A folder's Description" class="form-control"
+style="resize:none"
+></textarea>
+</div>
+</div>
+<input type="hidden" name="group_id" value="{{$folders->group_id}}">
 
 </form>
 </div>

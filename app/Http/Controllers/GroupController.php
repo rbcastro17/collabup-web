@@ -195,9 +195,24 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
 		return redirect()->back();
 	}
 	public function showFolder($id){
+
 		 $folders = Folder::where('id', $id)->first();
 		 $files = Files::where('folder_id',$id)->get();
         
+         $currpos = $folders->position;
+         if($currpos > 0){
+          $other_folder;    
+          
+        echo "Current Position: ". $currpos;  
+          for($i = $currpos; $currpos > 0; $i--){
+            echo $i; 
+        }
+         die();
+
+        }else{
+            echo "Current Position: ". $currpos;
+            die();
+        }
 	return view('group.showfolder',['files'=> $files, 'folders'=>$folders]);	
 	}
 
