@@ -236,7 +236,7 @@ Route::get('createFolderPage/{id}', 'GroupController@createFolderPage')->name('c
 
 Route::post('createFolder/{id}', 'GroupController@createFolder')->name('do.folder');
 
-Route::post('createFolder', 'GroupController@createFolder')->name('do.folder.notroot');
+Route::post('createFolder', 'GroupController@createAnotherFolder')->name('do.folder.notroot');
 
 Route::get('folder/{id}', 'GroupController@showFolder')->name('folder.specific');
 

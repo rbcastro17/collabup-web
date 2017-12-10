@@ -286,7 +286,6 @@ Array.prototype.forEach.call(document.querySelectorAll('#views a'), function (el
 </div> 
 </div>
 
-
 <div class="field">
 <label>Description</label>
 <div class="ui form input">
@@ -296,7 +295,7 @@ style="resize:none"
 </div>
 </div>
 <input type="hidden" name="group_id" value="{{$folders->group_id}}">
-
+<button type="submit" class="ui green button" >Save</button>
 </form>
 </div>
 </div>

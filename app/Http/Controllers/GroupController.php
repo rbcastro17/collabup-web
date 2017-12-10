@@ -189,7 +189,47 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
               
                   }  
         return redirect()->route('group.show',$id);
-	}
+    }
+    
+	public function createAnotherFolder(Request $request){
+        
+         $this->validate($request,[
+                'name' => 'required',
+                'description' => 'required|max:1000'
+            ]);
+            $ref = str_random(48);
+            $prev_folder = Folder::where("id", "=", $request->root_folder_id)->first();
+            $id = $prev_folder->id;
+            Folder::create([
+                'name' => $request->name,
+                'group_id' => $id,
+                'root_folder_id' => $request->root_folder_id,
+                'container_folder_id' => $request->container_folder_id,
+                'position' => $request->position,
+                'description' => $request->description,
+                'ref' => $ref
+            ]);
+
+                $members = Member::where('group_id', '=', $id)->get();
+                  foreach($members as $m){
+    
+                    event(new SendAppNotification(Auth::user()->id, $m->user_id,$ref,$id,8));
+                    
+                    AppNotification::create([
+                        'user_id' => Auth::user()->id,
+                        'reciever_id' => $m->user_id,
+                        'ref' => $ref,
+                        'group_id'=> $id,
+                        'type' => 8
+                    
+                        ]);
+                  
+                      }  
+            return redirect()->back();
+        }
+
+
+
 	public function deletefile($id){
 		Files::where('id', $id)->delete();
 		return redirect()->back();
@@ -198,27 +238,32 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
 
 		 $folders = Folder::where('id', $id)->first();
 		 $files = Files::where('folder_id',$id)->get();
-        
+         $other_folder = array();  
          $currpos = $folders->position;
+         
+         //dd($folders);
          if($currpos > 0){
-          $other_folder;    
-          
-       // echo "Current Position: ". $currpos;  
           for($i = $currpos; $currpos > 0; $i--){
-          $other = Folder::where([
-              
-          ])->first();
-            array_push($other_folder,[
-                "" => ,
-            ]); 
+            if($currpos == 1){
+                $prev_folder = $folders->container_folder_id;
+                $other = Folder::where("id", "=", $prev_folder)->first();
+            }
+            else{
+                $prev_folder = $other_folder['id'];
+                $other = Folder::where("id", "=", $prev_folder)->first();
+            }
+          
+          array_push($other_folder,[
+                "id" => $other->id,
+                "folder_name" => $other->name            
+                    ]); 
         }
-         die();
-
-        }else{
-            echo "Current Position: ". $currpos;
-            die();
         }
-	return view('group.showfolder',['files'=> $files, 'folders'=>$folders]);	
+        else{
+            $other_folder = null;    
+        }
+        print_r($other_folder); die();
+	return view('group.showfolder',['files'=> $files, 'folders'=>$folders, 'other_folders' => $other_folder]);	
 	}
 
 public function savelink(Request $request, $id){
