@@ -238,7 +238,7 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
 
 		 $folders = Folder::where('id', $id)->first();
          $files = Files::where('folder_id',$id)->get();
-         $in_folders = Folder::where("container_folder_id", "=", $id)->get();
+         $in_folders = Folder::where([["container_folder_id", "=", $id],["id", "!=", $id]])->get();
          $other_folder = array();  
 
          $currpos = $folders->position;
@@ -268,7 +268,7 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
             $other_folder = array();    
         }
     
-        $rev = array_reverse($other_folder, true);
+        $rev = array_reverse($other_folder);
 
 	return view('group.showfolder',['files'=> $files, "in_folders" => $in_folders, 'folders'=>$folders, 'other_folders' => $rev]);	
 	}

@@ -148,8 +148,11 @@
 @for($i = 0; $i < count($other_folders); $i++)
 <a href="{{url('folder/'.$other_folders[$i]['id'])}}">{{$other_folders[$i]["name"]}}</a><span class="divider">/</span>
 @endfor
+@if($folders->position != 0)
+<a href="{{url('folder/'. $folders->id)}}">{{$folders->name}}</a><span class="divider">/</span>
 @endif
-@if($folders->position > 0)
+@endif
+@if($folders->position == 0)
 @php
 $root_folder_id = $folders->id;
 $container_folder_id = $folders->id;
