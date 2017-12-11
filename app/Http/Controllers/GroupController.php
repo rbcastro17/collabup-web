@@ -237,33 +237,40 @@ public function showMemberRequest($id){  // lists of Group request $id = group_i
 	public function showFolder($id){
 
 		 $folders = Folder::where('id', $id)->first();
-		 $files = Files::where('folder_id',$id)->get();
+         $files = Files::where('folder_id',$id)->get();
+         $in_folders = Folder::where("container_folder_id", "=", $id)->get();
          $other_folder = array();  
+
          $currpos = $folders->position;
-         
-         //dd($folders);
+
          if($currpos > 0){
-          for($i = $currpos; $currpos > 0; $i--){
+
+          for($i = 0; $currpos > $i; $i++){
+
             if($currpos == 1){
                 $prev_folder = $folders->container_folder_id;
-                $other = Folder::where("id", "=", $prev_folder)->first();
+                $other = Folder::where("id",$prev_folder)->first();
             }
-            else{
-                $prev_folder = $other_folder['id'];
-                $other = Folder::where("id", "=", $prev_folder)->first();
+            else  {
+                if($i == 0){
+                    $prev_folder = $folders->container_folder_id;
+                    $other = Folder::where("id", "=", $prev_folder)->first();
+                }else{
+                    $prev_folder = $other_folder[$i-1]; 
+                    $other = Folder::where("id", "=", $prev_folder['container_id'])->first();
+                }  
             }
-          
-          array_push($other_folder,[
-                "id" => $other->id,
-                "folder_name" => $other->name            
-                    ]); 
-        }
+            
+            $other_folder[$i] = array("id" => $other->id,"container_id" => $other->container_folder_id, "name" => $other->name);        
+                }
         }
         else{
-            $other_folder = null;    
+            $other_folder = array();    
         }
-        print_r($other_folder); die();
-	return view('group.showfolder',['files'=> $files, 'folders'=>$folders, 'other_folders' => $other_folder]);	
+    
+        $rev = array_reverse($other_folder, true);
+
+	return view('group.showfolder',['files'=> $files, "in_folders" => $in_folders, 'folders'=>$folders, 'other_folders' => $rev]);	
 	}
 
 public function savelink(Request $request, $id){

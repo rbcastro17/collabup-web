@@ -1,3 +1,4 @@
+
 @extends('master')
 
 @section('title')
@@ -143,14 +144,18 @@
 <a href="{{url('folder/'.$folders->id)}}">{{$folders->name}}</a>
 <span class="divider"> / </span>
 
-@if($folders->position != 0)
+@else
+@for($i = 0; $i < count($other_folders); $i++)
+<a href="{{url('folder/'.$other_folders[$i]['id'])}}">{{$other_folders[$i]["name"]}}</a><span class="divider">/</span>
+@endfor
 @endif
-
+@if($folders->position > 0)
 @php
 $root_folder_id = $folders->id;
 $container_folder_id = $folders->id;
 $position = 1;
 @endphp
+
 @else
 @php
 $position = $folders->position + 1;
@@ -159,7 +164,7 @@ $root_folder_id;
 if($position == 1){
 $root_folder_id = $folders->id;
 }else{
-  $root_folder_id = $folder->root_folder_id;
+  $root_folder_id = $folders->root_folder_id;
 }
 
 @endphp
@@ -199,11 +204,17 @@ $_SESSION['folder_id'] = $folders->id;
 </tr>
 </table>
 
-
-
+<h3>&nbsp;&nbsp;&nbsp;Folder(s)</h3>
+@if($in_folders->count() == 0)
+<h4>&nbsp;&nbsp;&nbsp;No Folders Yet</h4>
+@else
+@foreach($in_folders as $i)
+<a href="{{url('folder/'.$i->id)}}">{{$i->name}} </a>
+@endforeach
+@endif
 <h3>&nbsp;&nbsp;&nbsp;Files</h3>
 @if($files->count() == 0)
-<h2>&nbsp;&nbsp;&nbsp;No Files Yet </h2>
+<h4>  No Files Yet </h4>
 @else
 
 <div class="ui inverted segment">
