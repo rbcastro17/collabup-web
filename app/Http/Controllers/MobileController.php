@@ -124,6 +124,7 @@ class MobileController extends Controller
 	public function updatepost(Request $request){
 
 		//This is updated
+		//Commented again
 		Post::where('id',$request->id)->update(['id', $request->body]);
 		return "success";
 	}
