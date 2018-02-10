@@ -116,16 +116,19 @@ class MobileController extends Controller
 		PasswordReset::where('code', $code)->delete();
 	}
 
-	public function deletepost(){
-		Post::where('id', $request->id)->delete();
+	public function deletepost(Request $request){
+		Post::where('id', $request->post_id)->delete();
 		return "success";
 	}
+
 
 	public function updatepost(Request $request){
 
 		//This is updated
 		//Commented again
-		Post::where('id',$request->id)->update(['id', $request->body]);
+	//	$post_id = "33";
+	//	$body = "hola";
+		Post::where('id',$request->post_id)->update(['body', $request->body]);
 		return "success";
 	}
 	
@@ -137,7 +140,7 @@ class MobileController extends Controller
 	}
 	
 	public function getownactivities(Request $request){
-		$id = $request->id;
+		$id = $request->user_id;
 		//echo $id; die();
 		//$id = 1;
 		
@@ -157,6 +160,7 @@ class MobileController extends Controller
 			'name' => $user->first_name.' '.$user->last_name,
 		//	'group'=> $group_data->group_name, 
 			'body' => $post->body,
+			"image" => asset('image/',$post->user->image),
 			'time' => $post->updated_at->diffForHumans()	
 		));
 		}
@@ -694,8 +698,8 @@ public function fetchpost(Request $request){
 		}
 
 		public function deleteevent(Request $request){
-			Event::where('id', '=', $request->event_id)->delete();	
-		echo "success";
+			Event::where('id', $request->event_id)->delete();	
+		return "success";
 		}
 
 		public function fetchevents(Request $request){

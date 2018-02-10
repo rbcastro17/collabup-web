@@ -412,5 +412,9 @@ Route::post('mobile/fetcheventmember', 'MobileController@fetcheventmember');
 
 Route::post('mobile/fetcheventhead', 'MobileController@fetcheventhead');
 
+Route::post('mobile/deletepost', 'MobileController@deletepost');
+
+Route::get('mobile/updatepost', 'MobileController@updatepost');
+
 //Route::post();
 
