@@ -126,9 +126,8 @@ class MobileController extends Controller
 
 		//This is updated
 		//Commented again
-	//	$post_id = "33";
-	//	$body = "hola";
-		Post::where('id',$request->post_id)->update(['body', $request->body]);
+
+		Post::where('id',$request->post_id)->update(['body'=> $request->body]);
 		return "success";
 	}
 	
@@ -620,24 +619,33 @@ public function fetchpost(Request $request){
 			}
 			return ['result' => $a];
 		}
-
+		
 		public function updategroup(Request $request){
 			$group_id = $request->group_id;
 			$description = $request->description;
 			$name = $request->name; 
 			$category_name = $request->type;
 			$privacy = $request->privacy;
+			$num_p;
+			if($privacy == "Open"){
+				$num_p = 1;
+			}elseif($privacy == "Closed"){
+				$num_p = 2;
+			}else{
+				$num_p = 3;
+			}
 
 			$category = Category::where('name', '=', $category_name)->first();
 			
-			$group = Group::where('id', '=', $group_id)->update([
+			Group::where('id', '=',$group_id)->update([
 				'description' => $description,
 				'group_name' => $name,
-				'group_type' => $privacy,
+				'type' => $num_p,
 				'category_id' => $category->id	
 			]);
-			echo "success";
+			return "success";
 		}
+
 
 		public function deletegroup(Request $request){
 			Group::where('id', '=', $request->group_id)->delete();
@@ -647,17 +655,18 @@ public function fetchpost(Request $request){
 			$group_id = $request->group_id;
 			$event_name = $request->title;
 			$event_author = $request->event_author;
-			$event_start = $request->start_duration;
-			$event_end = $request->end_duration;
-			$event_title = $request->title;
-			$event_body = $request->body;
+			$event_start = date('Y-m-d H:i:s',strtotime($request->start_duration));
+			$event_end = date( 'Y-m-d H:i:s',strtotime($request->end_duration));
+			$body = $request->body;
 			$ref = str_random(45);
+
+
 			Event::create([
 				'group_id' => $group_id, 
 				'event_author' => $event_author, 
 				'start_duration' => $event_start,
 				 'end_duration' => $event_end, 
-				 'title' => $title, 
+				 'title' => $event_name, 
 				 'body' =>$body,
 				  'ref'	=>$ref	
 			]);
@@ -676,7 +685,7 @@ public function fetchpost(Request $request){
 				]);
 		
 			}	
-			echo "success";	
+			return "success";	
 		}
 
 		public function editevent(Request $request){
@@ -818,7 +827,7 @@ public function fetchpost(Request $request){
 
 				array_push($result,[
 					'event_id' => $e->id,
-					'title' => $e->title,
+					'name' => $e->title,
 					'body' => $e->body,
 					'author' => $e->user->first_name." ". $e->user->last_name,
 					"start" => $start->format('l jS \\of F Y h:i:s A'), 
@@ -830,5 +839,27 @@ public function fetchpost(Request $request){
 
 			return ['result' => $result];
 		}
+
+
+		public function fetchgroups(Request $request){
+			$user_id = $request->user_id;
+			$groups = Group::where('group_owner', '=', $user_id)->get();
+			$result = array();
+			//print_r($groups); die();
+			foreach($groups as $g){
+				array_push($result,[
+					"group_id" => $g->id,
+					"group_name" => $g->group_name,
+					"code" => $g->code,
+					"description" => $g->description,
+					"group_owner" => $g->group_owner,
+					"type" => $g->type,
+					"category" => $g->category_id,
+					"hasChat" => $g->hasChat
+				]);
+			}
+			return ["result" => $result];
+		}
+
 
 	}

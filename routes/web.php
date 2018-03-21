@@ -103,6 +103,8 @@ Route::post('mobile/addcomment', 'MobileController@addComment');
 
 Route::post('mobile/fetchfiles', 'MobileController@fetchfiles');
 
+Route::post('mobile/fetchgroups', 'MobileController@fetchgroups');
+
 Route::get('account/{id}/activate', 'AdminController@activate')->name('account.activate.admin');
 
 Route::get('account/{id}/deactivate', 'AdminController@deactivate')->name('account.deactivate.admin');
@@ -396,7 +398,7 @@ Route::post('mobile/updategroup', 'MobileController@updategroup');
 
 Route::post('mobile/deletegroup', 'MobileController@deletegroup');
 
-Route::post('mobile/addevent', 'MobileController@addevent');
+Route::post('mobile/addevents', 'MobileController@addevent');
 
 Route::post('mobile/editevent', 'MobileController@editevent');
 
@@ -414,7 +416,9 @@ Route::post('mobile/fetcheventhead', 'MobileController@fetcheventhead');
 
 Route::post('mobile/deletepost', 'MobileController@deletepost');
 
-Route::get('mobile/updatepost', 'MobileController@updatepost');
+Route::post('mobile/updatepost', 'MobileController@updatepost');
+
+
 
 //Route::post();
 
